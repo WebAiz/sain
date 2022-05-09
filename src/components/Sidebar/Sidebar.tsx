@@ -1,35 +1,43 @@
 // @flow
-import * as React        from 'react';
-import {DropDown, Pages} from '../common/DropDown/DropDown';
-import "./Sidebar.scss"
-import {logout}          from '../../firebase';
+import * as React                     from 'react';
+import {DropDown}                     from '../common/DropDown/DropDown';
+import './Sidebar.scss';
+import {logout}                       from '../../firebase';
+import {useEffect, useState}          from 'react';
+import {addNewDoc, getCollectionDocs} from '../../helper';
 
 type Props = {};
 
-const commPages: Pages = {
-    title: 'Общие Страницы',
-    lists: [{
-        slug: 'news',
-        name: 'Китап'
-    }]
-};
-
-const uniquePages: Pages = {
-    title: 'Страницы',
-    lists: [{
-        slug: 'stuff',
-        name: 'сотрудники'
-    }]
-};
-
 export function Sidebar(props: Props) {
+    const [pages, setPages] = useState([]);
+    const [addPageOpen, setAddPageOpen] = useState(false);
+    const [newPage, setNewPage] = useState('');
+    const addNewPage = () => {
+        if (newPage.length) {
+            addNewDoc('common_pages', {name: newPage}).then(res => console.log('RES', res));
+            setNewPage('');
+            setAddPageOpen(false);
+        }
+    };
+    function getData(){
+        getCollectionDocs('common_pages').then((res) => setPages(res));
+    }
+    useEffect(() => {
+        getData()
+    }, []);
     return (
-        <section className={"sidebar"}>
+        <section className={'sidebar'}>
             <div className="sidebar__links">
-                <a href="/dashboard">Главная страница</a>
-                <DropDown data={commPages} />
-                <div className={"col border"}>
-                    <h3>Отдельные страницы</h3>
+                <a href="/">Главная страница</a>
+                <h3>Общие Разделы</h3>
+                <DropDown data={pages} />
+                <button onClick={() => setAddPageOpen(true)}>Добавить общий Раздел</button>
+                {addPageOpen && <div>
+                    <input type="text" value={newPage} onChange={(e) => setNewPage(e.target.value)} />
+                    <button onClick={addNewPage}>Add new Page</button>
+                </div>}
+                <div className={'col border'}>
+                    <h3>Отдельные Разделы</h3>
                     <a href="/stuff">Stuff</a>
                     <a href="/child-year">Child Year</a>
                     <a href="contacts">Contacts</a>

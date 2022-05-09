@@ -11,9 +11,9 @@ import {useAuthState}                                        from 'react-firebas
 import {auth}                                                from '../firebase';
 import {ChildYear}                                           from './pages/ChildYear/ChildYear';
 import {Contacts}                                            from './pages/Contacts/Contacts';
-import {Stuff}                                               from './pages/Stuff/Stuff';
-import {SubPage}                                             from './pages/CommonPages/SubPage/SubPage';
-import {Pages}                                               from './pages/Pages/Pages';
+import {Stuff}   from './pages/Stuff/Stuff';
+import {SubPage} from './pages/SubPage/SubPage';
+import {Pages}   from './pages/Pages/Pages';
 
 function App() {
     const [user, loading, error] = useAuthState(auth);

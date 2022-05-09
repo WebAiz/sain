@@ -1,10 +1,12 @@
 // @flow
-import * as React                                                             from 'react';
-import {useNavigate, useParams,}                                              from 'react-router-dom';
-import {useEffect, useState}                                                  from 'react';
-import {collection, doc, addDoc, getDoc, getDocs, query, where, getFirestore} from 'firebase/firestore';
-import {db}                                                                   from '../../../firebase';
-import {ROUTES}                                                               from '../../../contants';
+import * as React                                                                     from 'react';
+import {useNavigate, useParams,}                                                      from 'react-router-dom';
+import {useEffect, useState}                                                          from 'react';
+import {collection, doc, addDoc, getDoc, setDoc, getDocs, query, where, getFirestore} from 'firebase/firestore';
+import {db}                                                                           from '../../../firebase';
+import {ROUTES}                                                                       from '../../../contants';
+import {addSubCollectionDoc, editSubCollectionDoc, getSubCollectionDocs}              from '../../../helper';
+import {Modal}                                                                        from '../../common/Modal/Modal';
 
 export interface list {
     id: number,
@@ -26,89 +28,101 @@ interface PagesData {
 
 interface Page {
     name: string,
-    slug: string,
     id?: ''
 }
 
 export function CommonPages() {
-    const [subPageOpen, setSubPageOpen] = useState(false);
-    const [pages, setPages] = useState<Page[]>([]);
-    const [page, setPage] = useState<Page>({
+    const [openForm, setOpenForm] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [docs, setDocs] = useState<Page[]>([]);
+    const [subPage, setSubPage] = useState<Page>({
         name: '',
-        slug: '',
     });
     const {slug} = useParams();
     const navigate = useNavigate();
 
 
-    const sendData = async () => {
-        // Add a new document with a generated id.
-        if (page.name.length && page.slug.length) {
-            const pageData = {
-                name: page.name,
-                slug: page.slug
-            };
-            const pageRef = await addDoc(collection(db, 'common_pages'), pageData);
-            const subPageData = {
-                page_id:     pageRef.id,
-                title:       '',
-                description: '',
-            };
-            const subPageRef = await addDoc(collection(db, 'sub_pages'), subPageData);
-            getCommonPages()
-        }
-    };
-
-    function getCommonPages() {
-        getDocs(collection(db, 'common_pages')).then((res) => {
-            const arr: any = [];
-            res.forEach((doc) => {
-                // doc.data() is never undefined for query doc snapshots
-                arr.push({
-                    id: doc.id,
-                    ...doc.data()
-                });
-            });
-            setPages(arr);
-            console.log("getPAges",arr)
-        }).catch((err) => console.error(err));
-    }
-
     function goToSubPage(url: string) {
         // navigate(`pages/${page.slug}/${url}`);
     }
 
-    function addSubPage() {
-        // add to collection
-    }
+    const saveEdit = () => {
+        if (subPage.name) {
+            editSubCollectionDoc({
+                colRef:     'common_pages',
+                docID:      slug || '',
+                subColRef:  'sub_pages',
+                subDocID:   subPage.id,
+                subDocData: {name: subPage.name},
+            }).then((res) => {
+                setIsEditMode(false);
+                setSubPage({name: ''});
+                setOpenForm(false);
+                getData();
+            });
+        }
+    };
+    const addSubPages = () => {
+        if (subPage.name) {
+            addSubCollectionDoc({
+                colRef:     'common_pages',
+                docID:      slug || '',
+                subColRef:  'sub_pages',
+                subDocData: {name: subPage.name}
+            })
+                .then((res) => {
+                    setOpenForm(false);
+                    getSubCollectionDocs({
+                        colRef:    'common_pages',
+                        docID:     slug || '',
+                        subColRef: 'sub_pages'
+                    }).then(res => setDocs(res));
+                });
+        }
+    };
+    const handleEditClick = (page) => {
+        setSubPage(page);
+        setOpenForm(true);
+        setIsEditMode(true);
+    };
+    const handleAddClick = () => {
+        setSubPage({name: ''});
+        setIsEditMode(false);
+        setOpenForm(true);
+    };
 
-    function setImage(e: any) {
-
+    function getData() {
+        getSubCollectionDocs({
+            colRef:    'common_pages',
+            docID:     slug || '',
+            subColRef: 'sub_pages'
+        }).then(res => setDocs(res));
     }
 
     useEffect(() => {
-        getCommonPages();
+        getData();
     }, []);
+
     return (
         <main className={'commonPages'}>
-            <h2>Common Pages</h2>
-            <div className="commonPages__list">
-                {pages.map((list, index) => (
-                    <a href={ROUTES.SUB_PAGE + list.id} key={index}>{list.name}</a>
+            <h2>Подразделы</h2>
+            <section className="commonPages__list col mb">
+                {docs.map((page, index) => (
+                    <div className={'row sb mb-10 bg-gray p-10'} key={index}>
+                        <a href={ROUTES.PAGES + slug + '/' + page.id}>{page.name}</a>
+                        <button onClick={() => handleEditClick(page)}>Редактировать</button>
+                    </div>
                 ))}
-            </div>
-            <section>
-                <button className={'mb'} onClick={() => setSubPageOpen(true)}>Add SubPage</button>
-                {subPageOpen && <div className={'form'}>
-
-                    <label htmlFor="">Title</label>
-                    <input type="text" value={page.name} onChange={(e) => setPage({...page, name: e.target.value})} />
-                    <label htmlFor="">slugName</label>
-                    <input type="text" value={page.slug} onChange={(e) => setPage({...page, slug: e.target.value})} />
-                    <button onClick={sendData}>SendData</button>
-                </div>}
             </section>
-
+            <button className={'mb'} onClick={handleAddClick}>Добавить подразделы</button>
+            {openForm && <Modal>
+                <div className={'row sb border p-10'}>
+                    <input type="text" value={subPage.name}
+                           onChange={(e) => setSubPage({...subPage, name: e.target.value})} />
+                    {!isEditMode && <button onClick={addSubPages}>Добавить</button>}
+                    {isEditMode && <button onClick={saveEdit}>Сохранить изменения</button>}
+                </div>
+            </Modal>}
         </main>
     );
 };

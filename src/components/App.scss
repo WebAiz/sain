@@ -14,7 +14,8 @@ code {
 
 main {
   padding: 40px;
-  width: 100%;
+  width: 80%;
+  box-sizing: border-box;
 }
 
 a, a:visited, a:focus, a:active {
@@ -73,16 +74,19 @@ a:hover {
   display: flex;
   flex-direction: column;
   max-width: 600px;
+  margin: 0 auto;
 
   &__field {
     display: grid;
     grid-template-columns: 200px auto;
     margin-bottom: 20px;
   }
-  input{
+
+  input {
     margin-bottom: 20px;
   }
-  textarea{
+
+  textarea {
     margin-bottom: 20px;
   }
 }
@@ -95,19 +99,43 @@ a:hover {
 .row {
   display: flex;
 }
-.mb{
+
+.sb {
+  justify-content: space-between;
+}
+
+.mb {
   margin-bottom: 20px;
 }
-.ml{
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.ml {
   margin-left: 20px;
 }
-.mr{
+
+.mr {
   margin-right: 20px;
 }
-.mt{
+
+.mt {
   margin-top: 20px;
 }
 
-.border{
+.hover:hover {
+  color: blue;
+}
+
+.border {
   border: 1px solid gray;
+}
+
+.bg-gray {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.p-10 {
+  padding: 10px;
 }

@@ -1,9 +1,5 @@
-.dropDown{
-  ul{
-    border-bottom: 1px solid gray;
-  }
-  span:hover{
-    color: blue;
-    cursor: pointer;
-  }
+.dropDown {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }

@@ -1,36 +1,54 @@
 // @flow
 import * as React          from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import './DropDown.scss'
+import './DropDown.scss';
+import {ROUTES}            from '../../../contants';
+import {useState}          from 'react';
+import {Modal}             from '../Modal/Modal';
+import {editDoc}           from '../../../helper';
 
-export interface list {
-    slug: string,
-    name: string
+export interface Page {
+    id: string,
+    name: string,
 }
 
-export interface Pages {
-    title: string,
-    lists: list[]
-}
 type Props = {
-    data : Pages
+    data: Page[]
 }
 
 
-export function DropDown({data}:Props) {
+export function DropDown({data}: Props) {
+    const [openModal, setOpenModal] = useState(false);
+    const [page, setPage] = useState({
+        id:   '',
+        name: ''
+    });
     const navigate = useNavigate();
-
-    function goToPage(slug: string) {
-        navigate("/pages/" + slug);
-    }
+    const handleEdit = (page: any) => {
+        setOpenModal(true);
+        setPage(page);
+    };
+    const saveEdit = () => {
+        editDoc('common_pages', page.id, {name: page.name}).then((res) => {
+            setOpenModal(false);
+            setPage({id: '', name: ''});
+        });
+    };
     return (
-        <div className={'dropDown'}>
-            <h3>{data.title}</h3>
-            <ul>
-                {data.lists.map((list, index) => (
-                    <span key={index} onClick={() => goToPage(list.slug)}>{list.name}</span>
-                ))}
-            </ul>
-        </div>
+        <section className={'dropDown'}>
+            {data.map((item, index) => (
+                <div className={'row sb'} key={index}>
+                    <a href={ROUTES.PAGES + item.id} key={index}>{item.name}</a>
+                    <button onClick={() => handleEdit(item)}>Изменить</button>
+                </div>
+
+            ))}
+            {openModal && <Modal>
+                <div className={'edit'}>
+                    <input type="text" value={page.name} onChange={(e) => setPage({...page, name: e.target.value})} />
+                    <button onClick={saveEdit}>Сохранить</button>
+                </div>
+            </Modal>}
+        </section>
     );
-};
+}
