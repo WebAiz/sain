@@ -1,9 +1,10 @@
 // @flow
-import * as React                                                     from 'react';
-import {useNavigate, useParams,}                                      from 'react-router-dom';
-import {useEffect, useState}                                          from 'react';
-import {collection, doc, getDoc, getDocs, query, where, getFirestore} from 'firebase/firestore';
-import {db}                                                           from '../../../firebase';
+import * as React                                                             from 'react';
+import {useNavigate, useParams,}                                              from 'react-router-dom';
+import {useEffect, useState}                                                  from 'react';
+import {collection, doc, addDoc, getDoc, getDocs, query, where, getFirestore} from 'firebase/firestore';
+import {db}                                                                   from '../../../firebase';
+import {ROUTES}                                                               from '../../../contants';
 
 export interface list {
     id: number,
@@ -19,62 +20,62 @@ export interface Img {
 
 interface PagesData {
     slug: string,
-    lists: list[],
-    name: string
+    name: string,
+
 }
 
-interface SubPage {
-    title: string,
-    description: string,
-    image: unknown | null
+interface Page {
+    name: string,
+    slug: string,
+    id?: ''
 }
 
 export function CommonPages() {
     const [subPageOpen, setSubPageOpen] = useState(false);
-    const [newSubPage, setNewSubPage] = useState<SubPage>({
-        title:       '',
-        description: '',
-        image:       null
-    });
-    const [data, setData] = useState<PagesData>({
-        slug:  '',
-        lists: [],
-        name:  ''
+    const [pages, setPages] = useState<Page[]>([]);
+    const [page, setPage] = useState<Page>({
+        name: '',
+        slug: '',
     });
     const {slug} = useParams();
     const navigate = useNavigate();
 
-    async function fetchData() {
-        const querySnapshot = await getDocs(collection(db, 'common-pages'));
-        const arr:any = [];
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            arr.push({
-                id: doc.id,
-                ...doc.data()
-            });
-        });
-        console.log("DATA",arr)
-    }
 
-    async function fetchCommonPages(slug: string = '') {
-        try {
-            const querySnapshot = await getDocs(collection(db, 'common-pages'));
-            const arr:any = [];
-            querySnapshot.forEach((doc) => {
+    const sendData = async () => {
+        // Add a new document with a generated id.
+        if (page.name.length && page.slug.length) {
+            const pageData = {
+                name: page.name,
+                slug: page.slug
+            };
+            const pageRef = await addDoc(collection(db, 'common_pages'), pageData);
+            const subPageData = {
+                page_id:     pageRef.id,
+                title:       '',
+                description: '',
+            };
+            const subPageRef = await addDoc(collection(db, 'sub_pages'), subPageData);
+            getCommonPages()
+        }
+    };
+
+    function getCommonPages() {
+        getDocs(collection(db, 'common_pages')).then((res) => {
+            const arr: any = [];
+            res.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
                 arr.push({
-                    slug: doc.id,
+                    id: doc.id,
                     ...doc.data()
                 });
             });
-        } catch (err) {
-            console.error(err);
-        }
+            setPages(arr);
+            console.log("getPAges",arr)
+        }).catch((err) => console.error(err));
     }
 
     function goToSubPage(url: string) {
-        navigate(`pages/${data.slug}/${url}`);
+        // navigate(`pages/${page.slug}/${url}`);
     }
 
     function addSubPage() {
@@ -86,15 +87,14 @@ export function CommonPages() {
     }
 
     useEffect(() => {
-        fetchCommonPages(slug);
-    });
+        getCommonPages();
+    }, []);
     return (
         <main className={'commonPages'}>
-            commonPages
-            <h2>{data.name}</h2>
+            <h2>Common Pages</h2>
             <div className="commonPages__list">
-                {data.lists.map((list) => (
-                    <div onClick={() => goToSubPage(list.slug)} key={list.id}>{list.name}</div>
+                {pages.map((list, index) => (
+                    <a href={ROUTES.SUB_PAGE + list.id} key={index}>{list.name}</a>
                 ))}
             </div>
             <section>
@@ -102,13 +102,13 @@ export function CommonPages() {
                 {subPageOpen && <div className={'form'}>
 
                     <label htmlFor="">Title</label>
-                    <input type="text" value={newSubPage.title} />
-                    <label htmlFor="">Description</label>
-                    <textarea name="subpage" id="subpage" value={newSubPage.description} />
-                    <label htmlFor="">Choose Image</label>
-                    <input type="file" onChange={setImage} />
+                    <input type="text" value={page.name} onChange={(e) => setPage({...page, name: e.target.value})} />
+                    <label htmlFor="">slugName</label>
+                    <input type="text" value={page.slug} onChange={(e) => setPage({...page, slug: e.target.value})} />
+                    <button onClick={sendData}>SendData</button>
                 </div>}
             </section>
+
         </main>
     );
 };

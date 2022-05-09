@@ -13,6 +13,7 @@ import {ChildYear}                                           from './pages/Child
 import {Contacts}                                            from './pages/Contacts/Contacts';
 import {Stuff}                                               from './pages/Stuff/Stuff';
 import {SubPage}                                             from './pages/CommonPages/SubPage/SubPage';
+import {Pages}                                               from './pages/Pages/Pages';
 
 function App() {
     const [user, loading, error] = useAuthState(auth);
