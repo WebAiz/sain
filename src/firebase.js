@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from 'firebase/auth';
 import { getFirestore, query, getDocs, collection, where, addDoc } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -57,3 +58,4 @@ const logout = () => {
 };
 
 export { auth, db, logInWithEmailAndPassword, registerWithEmailAndPassword, sendPasswordReset, logout };
+export const storage = getStorage(app);

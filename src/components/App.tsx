@@ -1,37 +1,38 @@
-import React, {useEffect}                                    from 'react';
-import Login                                                 from './auth/Login';
-import Register                                              from './auth/Register';
-import {Sidebar}                                             from './Sidebar/Sidebar';
-import {BrowserRouter as Router, Route, Routes, useNavigate} from 'react-router-dom';
-import Reset                                                 from './auth/Reset/Reset';
-import Dashboard                                             from './Dashboard/Dashboard';
-import {CommonPages}                                         from './pages/CommonPages/CommonPages';
+import { useEffect } from 'react';
+import Login from './auth/Login';
+import Register from './auth/Register';
+import { Sidebar } from './Sidebar/Sidebar';
+import { Route, Routes, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import Reset from './auth/Reset/Reset';
+import Dashboard from './Dashboard/Dashboard';
+import { CommonPages } from './pages/CommonPages/CommonPages';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
+import { ChildYear } from './pages/ChildYear/ChildYear';
+import { Contacts } from './pages/Contacts/Contacts';
+import { Stuff } from './pages/Stuff/Stuff';
+import { BlogsPage } from './pages/BlogsPage/BlogsPage';
+
 import './App.scss';
-import {useAuthState}                                        from 'react-firebase-hooks/auth';
-import {auth}                                                from '../firebase';
-import {ChildYear}                                           from './pages/ChildYear/ChildYear';
-import {Contacts}                                            from './pages/Contacts/Contacts';
-import {Stuff}   from './pages/Stuff/Stuff';
-import {SubPage} from './pages/SubPage/SubPage';
-import {Pages}   from './pages/Pages/Pages';
 
 function App() {
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
+    const location = useLocation();
     useEffect(() => {
-        if (loading) return;
+        console.log('USEEFFECT');
         if (!user) return navigate('/login');
-    }, [user, loading]);
+    }, [location.pathname]);
     return (
         <div className="App">
             {user && <Sidebar />}
             <Routes>
-                <Route path="/" element={<Dashboard />} />
+                <Route path="/" element={<Dashboard user={user} />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/reset" element={<Reset />} />
                 <Route path="/pages/:slug" element={<CommonPages />} />
-                <Route path="/pages/:slug/:subSlug" element={<SubPage />} />
+                <Route path="/pages/:slug/:subSlug" element={<BlogsPage />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/child-year" element={<ChildYear />} />
                 <Route path="/stuff" element={<Stuff />} />
