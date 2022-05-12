@@ -6,9 +6,24 @@ export function Contacts() {
         email: '',
         telOne: '',
         telTwo: '',
+        street: '',
+        city: '',
+        region: '',
     });
     function handleChange(value: string, field: string) {
         switch (field) {
+            case 'region': {
+                setdata({ ...data, region: value });
+                break;
+            }
+            case 'city': {
+                setdata({ ...data, city: value });
+                break;
+            }
+            case 'street': {
+                setdata({ ...data, street: value });
+                break;
+            }
             case 'address': {
                 setdata({ ...data, address: value });
                 break;
@@ -32,14 +47,26 @@ export function Contacts() {
         console.log(data);
     }
     return (
-        <main className={"contacts"}>
+        <main className={'contacts'}>
             <h2>Contacts</h2>
             <form onSubmit={handleSubmit} className="form">
                 <h1>Contacts</h1>
                 <div className="form__body">
                     <div className="form__field">
+                        <label htmlFor="region">Region</label>
+                        <textarea onChange={(e) => handleChange(e.target.value, 'region')} value={data.address} name="data" id="region" placeholder="region" />
+                    </div>
+                    <div className="form__field">
+                        <label htmlFor="city">City</label>
+                        <textarea onChange={(e) => handleChange(e.target.value, 'city')} value={data.address} name="data" id="city" placeholder="city" />
+                    </div>
+                    <div className="form__field">
+                        <label htmlFor="street">Street</label>
+                        <textarea onChange={(e) => handleChange(e.target.value, 'street')} value={data.address} name="data" id="street" placeholder="street" />
+                    </div>
+                    <div className="form__field">
                         <label htmlFor="address">Address</label>
-                        <textarea onChange={(e) => handleChange(e.target.value, 'address')} value={data.address} name="data" id="address" placeholder="data streeet"/>
+                        <textarea onChange={(e) => handleChange(e.target.value, 'address')} value={data.address} name="data" id="address" placeholder="data streeet" />
                     </div>
                     <div className="form__field">
                         <label htmlFor="email">Email</label>
@@ -58,6 +85,5 @@ export function Contacts() {
                 <button type="submit">Save</button>
             </form>
         </main>
-
     );
 }

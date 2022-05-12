@@ -21,6 +21,7 @@ function App() {
     const location = useLocation();
     useEffect(() => {
         console.log('USEEFFECT');
+        if (loading) return;
         if (!user) return navigate('/login');
     }, [location.pathname]);
     return (
