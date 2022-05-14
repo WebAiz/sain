@@ -1,5 +1,6 @@
 import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { db } from './firebase';
+import {db, storage}                                             from './firebase';
+import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
 
 export interface GetSubDataList {
 	colRef: string,

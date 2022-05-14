@@ -23,6 +23,7 @@ export function Sidebar(props: Props) {
         getCollectionDocs('common_pages').then((res) => setPages(res));
     }
     useEffect(() => {
+        console.log("SIDEBAR UPDATE")
         getData()
     }, []);
     return (
@@ -30,7 +31,7 @@ export function Sidebar(props: Props) {
             <div className="sidebar__links">
                 <a href="/">Главная страница</a>
                 <h3>Общие Разделы</h3>
-                <DropDown data={pages} />
+                <DropDown data={pages} setData={setPages} />
                 <button onClick={() => setAddPageOpen(true)}>Добавить общий Раздел</button>
                 {addPageOpen && <div>
                     <input type="text" value={newPage} onChange={(e) => setNewPage(e.target.value)} />

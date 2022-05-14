@@ -1,26 +1,27 @@
-import { useEffect } from 'react';
-import Login from './auth/Login';
-import Register from './auth/Register';
-import { Sidebar } from './Sidebar/Sidebar';
-import { Route, Routes, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import Reset from './auth/Reset/Reset';
-import Dashboard from './Dashboard/Dashboard';
-import { CommonPages } from './pages/CommonPages/CommonPages';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../firebase';
-import { ChildYear } from './pages/ChildYear/ChildYear';
-import { Contacts } from './pages/Contacts/Contacts';
-import { Stuff } from './pages/Stuff/Stuff';
-import { BlogsPage } from './pages/BlogsPage/BlogsPage';
+import {useEffect}                                                           from 'react';
+import Login                                                                 from './auth/Login';
+import Register                                                              from './auth/Register';
+import {Sidebar}                                                             from './Sidebar/Sidebar';
+import {Route, Routes, useLocation, useNavigate, useParams, useSearchParams} from 'react-router-dom';
+import Reset                                                                 from './auth/Reset/Reset';
+import Dashboard                                                             from './Dashboard/Dashboard';
+import {CommonPages}                                                         from './pages/CommonPages/CommonPages';
+import {useAuthState}                                                        from 'react-firebase-hooks/auth';
+import {auth}                                                                from '../firebase';
+import {ChildYear}                                                           from './pages/ChildYear/ChildYear';
+import {Contacts}                                                            from './pages/Contacts/Contacts';
+import {Stuff}                                                               from './pages/Stuff/Stuff';
+import {BlogsPage}                                                           from './pages/BlogsPage/BlogsPage';
 
 import './App.scss';
+import {Images}                                                              from './Images/Images';
 
 function App() {
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
     const location = useLocation();
     useEffect(() => {
-        console.log('USEEFFECT');
+        console.log('APP UPDATE');
         if (loading) return;
         if (!user) return navigate('/login');
     }, [location.pathname]);
@@ -37,6 +38,7 @@ function App() {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/child-year" element={<ChildYear />} />
                 <Route path="/stuff" element={<Stuff />} />
+                <Route path="/images/:slug" element={<Images />} />
             </Routes>
         </div>
     );

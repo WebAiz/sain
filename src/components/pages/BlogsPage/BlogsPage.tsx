@@ -1,67 +1,33 @@
 // @flow
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { addSubSubCollectionDoc, editSubSubCollectionDoc, getSubSubCollectionDocs } from '../../../helper';
-import { useParams } from 'react-router-dom';
+import * as React                                                                 from 'react';
+import {useEffect, useState}                                                      from 'react';
+import {addSubSubCollectionDoc, editSubSubCollectionDoc, getSubSubCollectionDocs} from '../../../helper';
+import {useNavigate, useParams}                                                   from 'react-router-dom';
 import './BlogsPage.scss';
-import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../../../firebase';
 
 type Props = {};
 
 export function BlogsPage(props: Props) {
-    let image = null;
     const [blogList, setBlogList] = useState<any>([]);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [imgUrl, setImgUrl] = useState(null);
-    const [progresspercent, setProgresspercent] = useState(0);
+    const [openEdit, setOpenEdit] = useState(false);
+    const {slug, subSlug} = useParams();
+    const navigate = useNavigate();
     const [blog, setBlog] = useState<any>({
-        title: '',
+        title:       '',
         description: '',
     });
-    const [openEdit, setOpenEdit] = useState(false);
-    const { slug, subSlug } = useParams();
-
-    const handleImgChange = (e) => {
-        image = e.target.files[0];
-
-        if (!image) return;
-    };
-
-    const uploadImages = (docRef) => {
-        console.log('FILE', image);
-        if (!image) return;
-        const storageRef = ref(storage, `${docRef}/${image.name}`);
-        const uploadTask = uploadBytesResumable(storageRef, image);
-        uploadTask.on(
-            'state_changed',
-            (snapshot) => {
-                const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                setProgresspercent(progress);
-            },
-            (error) => {
-                alert(error);
-            },
-            () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    setImgUrl(downloadURL);
-                });
-            }
-        );
-    };
-
     const addBlog = async () => {
         if (blog.title && blog.description) {
             const docRef = await addSubSubCollectionDoc({
-                colRef: 'common_pages',
-                docID: slug,
-                subColRef: 'sub_pages',
-                subDocID: subSlug,
+                colRef:       'common_pages',
+                docID:        slug,
+                subColRef:    'sub_pages',
+                subDocID:     subSlug,
                 subSubColRef: 'blogs',
-                subSubData: { title: blog.title, description: blog.description },
+                subSubData:   {title: blog.title, description: blog.description},
             });
-            // create folder with Id of docRed.id
-            uploadImages(docRef);
+            window.location.reload();
         }
     };
     const handleEditClick = (blog) => {
@@ -72,24 +38,28 @@ export function BlogsPage(props: Props) {
 
     function getBlogs() {
         getSubSubCollectionDocs({
-            colRef: 'common_pages',
-            docID: slug,
-            subColRef: 'sub_pages',
-            subDocID: subSlug,
+            colRef:       'common_pages',
+            docID:        slug,
+            subColRef:    'sub_pages',
+            subDocID:     subSlug,
             subSubColRef: 'blogs',
         }).then((res) => setBlogList(res));
     }
 
     const editBlog = () => {
         editSubSubCollectionDoc({
-            colRef: 'common_pages',
-            docID: slug,
-            subColRef: 'sub_pages',
-            subDocID: subSlug,
+            colRef:       'common_pages',
+            docID:        slug,
+            subColRef:    'sub_pages',
+            subDocID:     subSlug,
             subSubColRef: 'blogs',
             subSubDocRef: blog.id,
-            subSubData: { title: blog.title, description: blog.description },
+            subSubData:   {title: blog.title, description: blog.description},
         }).then(() => setOpenEdit(false));
+        window.location.reload();
+    };
+    const goToImagesPage = (blog) => {
+        navigate(`/images/${blog.id}`);
     };
     useEffect(() => {
         getBlogs();
@@ -110,6 +80,7 @@ export function BlogsPage(props: Props) {
                         <span>{blog.title}</span>
                         <span>{blog.description}</span>
                         <button onClick={() => handleEditClick(blog)}>Редактировать</button>
+                        <button onClick={() => goToImagesPage(blog)}>Настроить картины</button>
                     </div>
                 ))}
             </section>
@@ -120,21 +91,14 @@ export function BlogsPage(props: Props) {
                 <section>
                     <div className={'form border'}>
                         <label htmlFor="">Заголовок</label>
-                        <input type="text" value={blog.title} onChange={(e) => setBlog({ ...blog, title: e.target.value })} />
                         <label htmlFor="">Описание</label>
-                        <textarea value={blog.description} onChange={(e) => setBlog({ ...blog, description: e.target.value })} />
-                        <input multiple name="files" type="file" onChange={handleImgChange} />
+                        <input type="text" value={blog.title}
+                               onChange={(e) => setBlog({...blog, title: e.target.value})} />
+                        <textarea value={blog.description}
+                                  onChange={(e) => setBlog({...blog, description: e.target.value})} />
+
                         {!isEditMode && <button onClick={addBlog}>Добавить</button>}
                         {isEditMode && <button onClick={editBlog}>Сохранить</button>}
-
-                        {imgUrl && <img src={imgUrl} alt="uploaded file" height={200} />}
-                        {!imgUrl && (
-                            <div className="outerbar">
-                                <div className="innerbar" style={{ width: `${progresspercent}%` }}>
-                                    {progresspercent}%
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </section>
             )}

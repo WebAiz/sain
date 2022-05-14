@@ -17,7 +17,7 @@ type Props = {
 }
 
 
-export function DropDown({data}: Props) {
+export function DropDown({data,setData}) {
     const [openModal, setOpenModal] = useState(false);
     const [page, setPage] = useState({
         id:   '',
@@ -32,7 +32,9 @@ export function DropDown({data}: Props) {
         editDoc('common_pages', page.id, {name: page.name}).then((res) => {
             setOpenModal(false);
             setPage({id: '', name: ''});
+            window.location.reload()
         });
+
     };
     return (
         <section className={'dropDown'}>
