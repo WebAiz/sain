@@ -3,9 +3,9 @@ import * as React                                                               
 import {useNavigate, useParams,}                                                      from 'react-router-dom';
 import {useEffect, useState}                                                          from 'react';
 import {collection, doc, addDoc, getDoc, setDoc, getDocs, query, where, getFirestore} from 'firebase/firestore';
-import {db}                                                                           from '../../../firebase';
-import {ROUTES}                                                                       from '../../../contants';
-import {addSubCollectionDoc, editSubCollectionDoc, getSubCollectionDocs}              from '../../../helper';
+import {db}                                                              from '../../../firebase';
+import {ROUTES}                                                          from '../../../constants';
+import {addSubCollectionDoc, editSubCollectionDoc, getSubCollectionDocs} from '../../../helper';
 import {Modal}                                                                        from '../../common/Modal/Modal';
 
 export interface list {

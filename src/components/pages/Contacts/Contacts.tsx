@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import {doc, getDoc, setDoc}        from 'firebase/firestore';
+import {db}                  from '../../../firebase';
 
 export function Contacts() {
     const [data, setdata] = useState({
@@ -43,42 +45,117 @@ export function Contacts() {
         }
     }
 
-    function handleSubmit() {
-        console.log(data);
+    function handleSubmit(e) {
+        e.preventDefault();
+        setDBData()
     }
+    async function getDBData() {
+        const docRef = doc(db, 'contacts', 'address');
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const res = docSnap.data();
+            setdata({...data, ...res});
+        } else {
+            // doc.data() will be undefined in this case
+            console.log('No such document!');
+        }
+    }
+
+    function setDBData() {
+        // Add a new document in collection "cities"
+        setDoc(doc(db, 'contacts', 'address'), {
+           ...data
+        }).then(res => {
+            alert('Data successfully updated');
+            window.location.reload();
+        });
+    }
+    useEffect(()=>{
+        getDBData()
+    },[])
     return (
         <main className={'contacts'}>
             <h2>Contacts</h2>
-            <form onSubmit={handleSubmit} className="form">
+            <form onSubmit={handleSubmit} className="form mb">
                 <h1>Contacts</h1>
                 <div className="form__body">
                     <div className="form__field">
                         <label htmlFor="region">Region</label>
-                        <textarea onChange={(e) => handleChange(e.target.value, 'region')} value={data.address} name="data" id="region" placeholder="region" />
+                        <textarea
+                            required
+                            onChange={(e) => handleChange(e.target.value, 'region')}
+                            value={data.region}
+                            name="data"
+                            id="region"
+                            minLength={2}
+                            placeholder="region" />
                     </div>
                     <div className="form__field">
                         <label htmlFor="city">City</label>
-                        <textarea onChange={(e) => handleChange(e.target.value, 'city')} value={data.address} name="data" id="city" placeholder="city" />
+                        <textarea
+                            required
+                            onChange={(e) => handleChange(e.target.value, 'city')}
+                            value={data.city}
+                            name="data"
+                            id="city"
+                            minLength={2}
+                            placeholder="city" />
                     </div>
                     <div className="form__field">
                         <label htmlFor="street">Street</label>
-                        <textarea onChange={(e) => handleChange(e.target.value, 'street')} value={data.address} name="data" id="street" placeholder="street" />
+                        <textarea
+                            required
+                            onChange={(e) => handleChange(e.target.value, 'street')}
+                            value={data.street}
+                            name="data"
+                            id="street"
+                            minLength={2}
+                            placeholder="street" />
                     </div>
                     <div className="form__field">
                         <label htmlFor="address">Address</label>
-                        <textarea onChange={(e) => handleChange(e.target.value, 'address')} value={data.address} name="data" id="address" placeholder="data streeet" />
+                        <textarea
+                            required
+                            onChange={(e) => handleChange(e.target.value, 'address')}
+                            value={data.address}
+                            name="data"
+                            id="address"
+                            minLength={5}
+                            placeholder="data streeet" />
                     </div>
                     <div className="form__field">
                         <label htmlFor="email">Email</label>
-                        <input onChange={(e) => handleChange(e.target.value, 'email')} value={data.email} type="email" placeholder="Email" id="email" />
+                        <input
+                            required
+                            onChange={(e) => handleChange(e.target.value, 'email')}
+                            value={data.email}
+                            type="email"
+                            placeholder="Email"
+                            id="email" />
                     </div>
                     <div className="form__field">
                         <label htmlFor="tel1">Tel 1</label>
-                        <input onChange={(e) => handleChange(e.target.value, 'telOne')} value={data.telOne} type="text" placeholder="tel 1" id="tel1" />
+                        <input
+                            required
+                            onChange={(e) => handleChange(e.target.value, 'telOne')}
+                            value={data.telOne}
+                            type="text"
+                            placeholder="tel 1"
+                            max={11}
+                            min={10}
+                            id="tel1" />
                     </div>
                     <div className="form__field">
                         <label htmlFor="tel2">Tel 2</label>
-                        <input onChange={(e) => handleChange(e.target.value, 'telTwo')} value={data.telTwo} type="text" placeholder="tel 2" id="tel2" />
+                        <input
+                            onChange={(e) => handleChange(e.target.value, 'telTwo')}
+                            value={data.telTwo}
+                            type="text"
+                            max={11}
+                            min={10}
+                            placeholder="tel 2"
+                            id="tel2" />
                     </div>
                 </div>
 

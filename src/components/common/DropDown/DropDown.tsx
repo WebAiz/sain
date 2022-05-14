@@ -2,8 +2,8 @@
 import * as React          from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import './DropDown.scss';
-import {ROUTES}            from '../../../contants';
-import {useState}          from 'react';
+import {ROUTES}   from '../../../constants';
+import {useState} from 'react';
 import {Modal}             from '../Modal/Modal';
 import {editDoc}           from '../../../helper';
 

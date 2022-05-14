@@ -31,7 +31,7 @@ a:hover {
   max-width: 1368px;
   margin: 0 auto;
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .App-logo {
