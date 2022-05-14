@@ -41,7 +41,8 @@ export function Sidebar(props: Props) {
                     <h3>Отдельные Разделы</h3>
                     <a href="/stuff">Stuff</a>
                     <a href="/child-year">Child Year</a>
-                    <a href="contacts">Contacts</a>
+                    <a href="/contacts">Contacts</a>
+                    <a href="/ceo">CEO</a>
                 </div>
 
             </div>
