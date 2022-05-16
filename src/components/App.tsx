@@ -22,16 +22,17 @@ function App() {
     const navigate = useNavigate();
     const location = useLocation();
     useEffect(() => {
-        console.log('APP UPDATE');
+        console.log('APP UPDATE', user);
         if (loading) return;
         if (!user) return navigate('/login');
     }, [location.pathname]);
     return (
         <div className="App">
             {user && <Sidebar />}
+            {!user && <Login />}
             <Routes>
                 <Route path="/" element={<Dashboard user={user} />} />
-                <Route path="/login" element={<Login />} />
+                {/* <Route path="/login" element={<Login />} /> */}
                 <Route path="/register" element={<Register />} />
                 <Route path="/reset" element={<Reset />} />
                 <Route path="/pages/:slug" element={<CommonPages />} />

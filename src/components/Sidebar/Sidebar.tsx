@@ -1,10 +1,10 @@
 // @flow
-import * as React                     from 'react';
-import {DropDown}                     from '../common/DropDown/DropDown';
+import * as React from 'react';
+import { DropDown } from '../common/DropDown/DropDown';
 import './Sidebar.scss';
-import {logout}                       from '../../firebase';
-import {useEffect, useState}          from 'react';
-import {addNewDoc, getCollectionDocs} from '../../helper';
+import { logout } from '../../firebase';
+import { useEffect, useState } from 'react';
+import { addNewDoc, getCollectionDocs } from '../../helper';
 
 type Props = {};
 
@@ -14,12 +14,12 @@ export function Sidebar(props: Props) {
     const [newPage, setNewPage] = useState('');
     const addNewPage = () => {
         if (newPage.length) {
-            addNewDoc('common_pages', {name: newPage}).then(res => console.log('RES', res));
+            addNewDoc('common_pages', { name: newPage }).then(res => console.log('RES', res));
             setNewPage('');
             setAddPageOpen(false);
         }
     };
-    function getData(){
+    function getData() {
         getCollectionDocs('common_pages').then((res) => setPages(res));
     }
     useEffect(() => {
@@ -35,14 +35,14 @@ export function Sidebar(props: Props) {
                 <button onClick={() => setAddPageOpen(true)}>Добавить общий Раздел</button>
                 {addPageOpen && <div>
                     <input type="text" value={newPage} onChange={(e) => setNewPage(e.target.value)} />
-                    <button onClick={addNewPage}>Add new Page</button>
+                    <button onClick={addNewPage}>Добавить новую страницу</button>
                 </div>}
                 <div className={'col border'}>
                     <h3>Отдельные Разделы</h3>
-                    <a href="/stuff">Stuff</a>
-                    <a href="/child-year">Child Year</a>
-                    <a href="/contacts">Contacts</a>
-                    <a href="/ceo">CEO</a>
+                    <a className='mb-10' href="/stuff">Сотрудники</a>
+                    <a className='mb-10' href="/child-year">Год детей</a>
+                    <a className='mb-10' href="/contacts">Контакты</a>
+                    <a className='mb-10' href="/ceo">Директор садика</a>
                 </div>
 
             </div>

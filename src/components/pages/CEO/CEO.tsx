@@ -1,9 +1,9 @@
 // @flow
-import * as React                                                         from 'react';
-import {deleteObject, getDownloadURL, listAll, ref, uploadBytesResumable} from 'firebase/storage';
-import {db, storage}                                                      from '../../../firebase';
-import {useEffect, useState}                                              from 'react';
-import {doc, getDoc, setDoc}                                              from 'firebase/firestore';
+import * as React from 'react';
+import { deleteObject, getDownloadURL, listAll, ref, uploadBytesResumable } from 'firebase/storage';
+import { db, storage } from '../../../firebase';
+import { useEffect, useState } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 type Props = {};
 
@@ -19,8 +19,8 @@ export function Ceo(props: Props) {
             .then(async (res) => {
                 const url = await await getImgUrl(res.items[0].name);
             }).catch((error) => {
-            alert('Uh-oh, an error occurred!');
-        });
+                alert('Uh-oh, an error occurred!');
+            });
     }
 
     async function getImgUrl(name) {
@@ -39,11 +39,11 @@ export function Ceo(props: Props) {
     };
     const handleImg = (e) => {
         if (e.target.files) {
-            uploadImages(e.target.files[0]);
+            uploadImage(e.target.files[0]);
         }
     };
 
-    function uploadImages(img) {
+    function uploadImage(img) {
         if (!img) return;
         const imgType = img.type.split('/')[1];
         const storageRef = ref(storage, `ceo/ceo.${imgType}`);
@@ -94,23 +94,23 @@ export function Ceo(props: Props) {
     }, []);
     return (
         <main>
-            <h1>CEO info </h1>
+            <h1>Директор Садика</h1>
             <section className={'col'}>
                 <div className="images__upload">
                     <img src={image} alt="uploaded file" height={200} />
                 </div>
                 <div className={'row sb mb'}>
-                    <label htmlFor="">Ceo Full Name</label>
+                    <label htmlFor="">ФИО директора</label>
                     <input type="text" disabled={isDisabled} value={name} onChange={(e) => setName(e.target.value)} />
-                    {isDisabled && <button onClick={() => handleEditClick()}>Edit Name</button>}
-                    {!isDisabled && <button onClick={() => saveEdit()}>Save</button>}
+                    {isDisabled && <button onClick={() => handleEditClick()}>Редактировать ФИО</button>}
+                    {!isDisabled && <button onClick={() => saveEdit()}>Сохранить</button>}
                 </div>
 
-                <label htmlFor="image">Edit Img</label>
+                <label htmlFor="image">Редактировать картину</label>
                 <input type="file" onChange={(e) => handleImg(e)}></input>
                 {!image.length && (
                     <div className="outerbar">
-                        <div className="innerbar" style={{width: `${progressPercent}%`}}>
+                        <div className="innerbar" style={{ width: `${progressPercent}%` }}>
                             {progressPercent}%
                         </div>
                     </div>

@@ -1,12 +1,12 @@
 // @flow
-import * as React            from 'react';
+import * as React from 'react';
 import {
     deleteObject, getDownloadURL, ref,
     uploadBytesResumable, listAll
-}                            from 'firebase/storage';
-import {storage}             from '../../firebase';
-import {useEffect, useState} from 'react';
-import {useParams}           from 'react-router-dom';
+} from 'firebase/storage';
+import { storage } from '../../firebase';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 type Props = {};
 
@@ -14,7 +14,7 @@ export function Images(props: Props) {
     const [images, setImages] = useState([]);
     const [uploadImgUrls, setUploadImgUrls] = useState([]);
     const [progressPercent, setProgressPercent] = useState(0);
-    const {slug} = useParams();
+    const { slug } = useParams();
 
     const deleteImg = (imgName) => {
         const desertRef = ref(storage, `${slug}/${imgName}`);
@@ -63,18 +63,18 @@ export function Images(props: Props) {
     };
 
     const getImages = (blogID) => {
-        const listRef = ref(storage, slug);
+        const listRef = ref(storage, blogID);
         listAll(listRef)
             .then(async (res) => {
                 const imgList = []
                 for (const itemRef of res.items) {
                     const url = await getImgUrl(itemRef.name);
-                    imgList.push({name: itemRef.name, url})
+                    imgList.push({ name: itemRef.name, url })
                 }
                 setImages(imgList)
             }).catch((error) => {
-           alert('Uh-oh, an error occurred!');
-        });
+                alert('Uh-oh, an error occurred!');
+            });
     };
 
     async function getImgUrl(imgName) {
@@ -91,7 +91,7 @@ export function Images(props: Props) {
                 {images.map((img) => (
                     <div className={"row sb"} key={img.name}>
                         <p>{img.name}</p>
-                        <img src={img.url} alt="" height={"100px"}/>
+                        <img src={img.url} alt="" height={"100px"} />
                         <button onClick={() => deleteImg(img.name)}>DELETE</button>
                     </div>
                 ))}
@@ -106,7 +106,7 @@ export function Images(props: Props) {
                     </div>}
                 {!uploadImgUrls.length && (
                     <div className="outerbar">
-                        <div className="innerbar" style={{width: `${progressPercent}%`}}>
+                        <div className="innerbar" style={{ width: `${progressPercent}%` }}>
                             {progressPercent}%
                         </div>
                     </div>

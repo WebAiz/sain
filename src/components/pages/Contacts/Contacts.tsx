@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {doc, getDoc, setDoc}        from 'firebase/firestore';
-import {db}                  from '../../../firebase';
+import React, { useEffect, useState } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 export function Contacts() {
     const [data, setdata] = useState({
@@ -55,7 +55,7 @@ export function Contacts() {
 
         if (docSnap.exists()) {
             const res = docSnap.data();
-            setdata({...data, ...res});
+            setdata({ ...data, ...res });
         } else {
             // doc.data() will be undefined in this case
             console.log('No such document!');
@@ -65,23 +65,23 @@ export function Contacts() {
     function setDBData() {
         // Add a new document in collection "cities"
         setDoc(doc(db, 'contacts', 'address'), {
-           ...data
+            ...data
         }).then(res => {
             alert('Data successfully updated');
             window.location.reload();
         });
     }
-    useEffect(()=>{
+    useEffect(() => {
         getDBData()
-    },[])
+    }, [])
     return (
         <main className={'contacts'}>
-            <h2>Contacts</h2>
+            <h2>Контакты</h2>
             <form onSubmit={handleSubmit} className="form mb">
-                <h1>Contacts</h1>
+                <h1>Контакты</h1>
                 <div className="form__body">
                     <div className="form__field">
-                        <label htmlFor="region">Region</label>
+                        <label htmlFor="region">Регион</label>
                         <textarea
                             required
                             onChange={(e) => handleChange(e.target.value, 'region')}
@@ -92,7 +92,7 @@ export function Contacts() {
                             placeholder="region" />
                     </div>
                     <div className="form__field">
-                        <label htmlFor="city">City</label>
+                        <label htmlFor="city">Город</label>
                         <textarea
                             required
                             onChange={(e) => handleChange(e.target.value, 'city')}
@@ -103,7 +103,7 @@ export function Contacts() {
                             placeholder="city" />
                     </div>
                     <div className="form__field">
-                        <label htmlFor="street">Street</label>
+                        <label htmlFor="street">Улица</label>
                         <textarea
                             required
                             onChange={(e) => handleChange(e.target.value, 'street')}
@@ -114,7 +114,7 @@ export function Contacts() {
                             placeholder="street" />
                     </div>
                     <div className="form__field">
-                        <label htmlFor="address">Address</label>
+                        <label htmlFor="address">Адрес</label>
                         <textarea
                             required
                             onChange={(e) => handleChange(e.target.value, 'address')}
@@ -135,7 +135,7 @@ export function Contacts() {
                             id="email" />
                     </div>
                     <div className="form__field">
-                        <label htmlFor="tel1">Tel 1</label>
+                        <label htmlFor="tel1">телефон 1</label>
                         <input
                             required
                             onChange={(e) => handleChange(e.target.value, 'telOne')}
@@ -147,7 +147,7 @@ export function Contacts() {
                             id="tel1" />
                     </div>
                     <div className="form__field">
-                        <label htmlFor="tel2">Tel 2</label>
+                        <label htmlFor="tel2">телефон 2</label>
                         <input
                             onChange={(e) => handleChange(e.target.value, 'telTwo')}
                             value={data.telTwo}
@@ -159,7 +159,7 @@ export function Contacts() {
                     </div>
                 </div>
 
-                <button type="submit">Save</button>
+                <button type="submit">Сохранить</button>
             </form>
         </main>
     );
