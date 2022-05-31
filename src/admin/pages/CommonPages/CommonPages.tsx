@@ -109,7 +109,7 @@ export function CommonPages() {
             <section className="commonPages__list col mb">
                 {docs.map((page, index) => (
                     <div className={'row sb mb-10 bg-gray p-10'} key={index}>
-                        <a href={ADMIN_ROUTES.PAGES + slug + '/admin' + page.id}>{page.name}</a>
+                        <a href={ADMIN_ROUTES.PAGES + slug + "/" + page.id}>{page.name}</a>
                         <button onClick={() => handleEditClick(page)}>Редактировать</button>
                     </div>
                 ))}

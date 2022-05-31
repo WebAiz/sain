@@ -2,7 +2,7 @@
 import * as React          from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import './DropDown.scss';
-import {ROUTES}   from '../../../constants';
+import {ADMIN_ROUTES, ROUTES} from '../../../constants';
 import {useState} from 'react';
 import {Modal}             from '../Modal/Modal';
 import {editDoc}           from '../../../helper';
@@ -40,7 +40,7 @@ export function DropDown({data,setData}) {
         <section className={'dropDown'}>
             {data.map((item, index) => (
                 <div className={'row sb'} key={index}>
-                    <a href={ROUTES.PAGES + item.id} key={index}>{item.name}</a>
+                    <a href={ADMIN_ROUTES.PAGES + item.id} key={index}>{item.name}</a>
                     <button onClick={() => handleEdit(item)}>Изменить</button>
                 </div>
 

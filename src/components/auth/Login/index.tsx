@@ -13,7 +13,7 @@ function Login() {
             // maybe trigger a loading screen
             return;
         }
-        if (user) navigate('/');
+        if (user) navigate('/admin');
     }, [user, loading]);
     return (
         <div className="login">
