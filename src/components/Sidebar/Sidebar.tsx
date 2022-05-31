@@ -39,10 +39,10 @@ export function Sidebar(props: Props) {
                 </div>}
                 <div className={'col border'}>
                     <h3>Отдельные Разделы</h3>
-                    <a className='mb-10' href="/stuff">Сотрудники</a>
-                    <a className='mb-10' href="/child-year">Год детей</a>
-                    <a className='mb-10' href="/contacts">Контакты</a>
-                    <a className='mb-10' href="/ceo">Директор садика</a>
+                    <a className='mb-10' href="/admin/stuff">Сотрудники</a>
+                    <a className='mb-10' href="/admin/child-year">Год детей</a>
+                    <a className='mb-10' href="/admin/contacts">Контакты</a>
+                    <a className='mb-10' href="/admin/ceo">Директор садика</a>
                 </div>
 
             </div>
