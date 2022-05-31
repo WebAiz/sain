@@ -3,7 +3,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 
 export function Contacts() {
-    const [data, setdata] = useState({
+    const [data, setData] = useState({
         address: '',
         email: '',
         telOne: '',
@@ -15,31 +15,31 @@ export function Contacts() {
     function handleChange(value: string, field: string) {
         switch (field) {
             case 'region': {
-                setdata({ ...data, region: value });
+                setData({ ...data, region: value });
                 break;
             }
             case 'city': {
-                setdata({ ...data, city: value });
+                setData({ ...data, city: value });
                 break;
             }
             case 'street': {
-                setdata({ ...data, street: value });
+                setData({ ...data, street: value });
                 break;
             }
             case 'address': {
-                setdata({ ...data, address: value });
+                setData({ ...data, address: value });
                 break;
             }
             case 'email': {
-                setdata({ ...data, email: value });
+                setData({ ...data, email: value });
                 break;
             }
             case 'telOne': {
-                setdata({ ...data, telOne: value });
+                setData({ ...data, telOne: value });
                 break;
             }
             case 'telTwo': {
-                setdata({ ...data, telTwo: value });
+                setData({ ...data, telTwo: value });
                 break;
             }
         }
@@ -55,7 +55,7 @@ export function Contacts() {
 
         if (docSnap.exists()) {
             const res = docSnap.data();
-            setdata({ ...data, ...res });
+            setData({ ...data, ...res });
         } else {
             // doc.data() will be undefined in this case
             console.log('No such document!');

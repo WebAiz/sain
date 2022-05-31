@@ -1,3 +1,7 @@
 export const ROUTES = {
-    PAGES:'/pages/'
+
+}
+
+export const ADMIN_ROUTES = {
+    PAGES:'/pages'
 }

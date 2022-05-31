@@ -17,7 +17,7 @@ export function Ceo(props: Props) {
         const listRef = ref(storage, 'ceo');
         listAll(listRef)
             .then(async (res) => {
-                const url = await await getImgUrl(res.items[0].name);
+                const url = await getImgUrl(res.items[0].name);
             }).catch((error) => {
                 alert('Uh-oh, an error occurred!');
             });
@@ -116,7 +116,6 @@ export function Ceo(props: Props) {
                     </div>
                 )}
             </section>
-
         </main>
     );
 };
