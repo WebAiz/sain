@@ -2,6 +2,40 @@
   display: flex;
   min-height: 100vh;
   font-size: 1.3rem;
+
+  .form__field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  input {
+    height: 40px;
+  }
+
+  label {
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  main {
+    width: 100%;
+    padding: 20px;
+  }
+
+  button {
+    border: 1px solid green;
+    margin-bottom: 10px;
+    transition: 0.3s linear;
+
+    &:hover {
+      background: #4285f4;
+      color: #fff;
+    }
+  }
 }
 
 .row {
@@ -32,3 +66,12 @@
 .border {
   border: 1px solid gray;
 }
+
+.bg-gray {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.p-10 {
+  padding: 10px;
+}
+
