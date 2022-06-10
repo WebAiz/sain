@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {HeaderTop} from './HeaderTop';
 import {HeaderMiddle} from './HeaderMiddle';
 import {HeaderBottom} from './HeaderBottom';
@@ -16,7 +16,7 @@ export function Header(props: Props) {
   const [headerData, setHeaderData] = useState([]);
   const navigate = useNavigate();
 
-  async function getData() {
+  const getData = useCallback(async () => {
     const res = await getCollectionDocs('common_pages');
     if (res) {
       const list = [];
@@ -30,7 +30,7 @@ export function Header(props: Props) {
       }
       setHeaderData(list);
     }
-  }
+  }, []);
 
   const navigateToBlogs = (sectionID, blogsID) => {
     navigate(`/blogs/${sectionID}/${blogsID}`);

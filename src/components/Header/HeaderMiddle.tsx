@@ -10,9 +10,6 @@ export function HeaderMiddle(props: Props) {
         <img onClick={() => navigate('/')} src={'/images/logo.png'} alt="logo" />
         <img src="/images/map.png" alt="map" />
         <Contacts />
-        {/*  TODO рузани жангыру*/}
-        {/*  TODO add mobile phone*/}
-
       </div>
   );
 }

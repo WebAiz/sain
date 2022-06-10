@@ -1,6 +1,5 @@
-import { addDoc, collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import {db, storage}                                             from './firebase';
-import {deleteObject, getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage';
+import {addDoc, collection, doc, getDoc, getDocs, setDoc} from 'firebase/firestore';
+import {db} from './firebase';
 
 export interface GetSubDataList {
 	colRef: string,
@@ -35,7 +34,7 @@ export async function getCollectionDocs(colRef: string) {
 	docQuery.forEach((doc) => {
 		docList.push({
 			id: doc.id,
-			...doc.data()
+			...doc.data(),
 		});
 	});
 	return docList;
@@ -43,64 +42,72 @@ export async function getCollectionDocs(colRef: string) {
 
 export async function getCollectionDoc(colRef: string, docID: string) {
 	const docRef = await getDoc(doc(db, colRef, docID));
-	console.log('getCollectionDoc', docRef.data());
-	return { id: docRef.id, ...docRef.data() };
+	// console.log('getCollectionDoc', docRef.data());
+	return {id: docRef.id, ...docRef.data()};
 }
 
 export async function addSubCollectionDoc(args: AddSubData) {
-	const { colRef, docID, subColRef, subDocData } = args;
+	const {colRef, docID, subColRef, subDocData} = args;
 	const docRef = doc(collection(db, colRef, docID, subColRef));
 	const docSnap = await setDoc(docRef, subDocData);
 }
 
 export async function getSubCollectionDoc(args: GetSubData) {
-	const { colRef, docID, subColRef, subDocID } = args;
+	const {colRef, docID, subColRef, subDocID} = args;
 	const docRef = doc(db, colRef, docID, subColRef, subDocID);
 	const docSnap = await getDoc(docRef);
 	return docSnap.data();
 }
 
-export async function getSubCollectionDocs({ colRef, docID, subColRef }: GetSubDataList) {
+export async function getSubCollectionDocs({colRef, docID, subColRef}: GetSubDataList) {
 	const resRef = collection(db, colRef, docID, subColRef);
 	const docSnap = await getDocs(resRef);
 	const resArr: any = [];
 	docSnap.forEach((res) => {
-		resArr.push({ id: res.id, ...res.data() });
+		resArr.push({id: res.id, ...res.data()});
 	});
 	return resArr;
 }
 
 export async function editSubCollectionDoc(args: EditSubData) {
-	const { colRef, docID, subColRef, subDocID, subDocData } = args;
+	const {colRef, docID, subColRef, subDocID, subDocData} = args;
 	const docRef = doc(db, colRef, docID, subColRef, subDocID);
-	const docSnap = await setDoc(docRef, subDocData, { merge: true });
+	const docSnap = await setDoc(docRef, subDocData, {merge: true});
 }
 
 // 3rd level
 
-export async function addSubSubCollectionDoc({ colRef, docID, subColRef, subDocID, subSubColRef, subSubData }) {
+export async function addSubSubCollectionDoc({colRef, docID, subColRef, subDocID, subSubColRef, subSubData}) {
 	const docRef = doc(collection(db, colRef, docID, subColRef, subDocID, subSubColRef));
 	const docSnap = await setDoc(docRef, subSubData);
-	return docRef
+	return docRef;
 }
 
-export async function getSubSubCollectionDoc({ colRef, docID, subColRef, subDocID, subSubColRef, subSubDocID }) {
+export async function getSubSubCollectionDoc({colRef, docID, subColRef, subDocID, subSubColRef, subSubDocID}) {
 	const docRef = doc(db, colRef, docID, subColRef, subDocID, subSubColRef, subSubDocID);
 	const docSnap = await getDoc(docRef);
 	return docSnap.data();
 }
 
-export async function getSubSubCollectionDocs({ colRef, docID, subColRef, subDocID, subSubColRef }) {
+export async function getSubSubCollectionDocs({colRef, docID, subColRef, subDocID, subSubColRef}) {
 	const resRef = collection(db, colRef, docID, subColRef, subDocID, subSubColRef);
 	const docSnap = await getDocs(resRef);
 	const resArr: any = [];
 	docSnap.forEach((res) => {
-		resArr.push({ id: res.id, ...res.data() });
+		resArr.push({id: res.id, ...res.data()});
 	});
 	return resArr;
 }
 
-export async function editSubSubCollectionDoc({ colRef, docID, subColRef, subDocID, subSubColRef, subSubDocRef, subSubData }) {
+export async function editSubSubCollectionDoc({
+																								colRef,
+																								docID,
+																								subColRef,
+																								subDocID,
+																								subSubColRef,
+																								subSubDocRef,
+																								subSubData,
+																							}) {
 	const docRef = doc(db, colRef, docID, subColRef, subDocID, subSubColRef, subSubDocRef);
-	const docSnap = await setDoc(docRef, subSubData, { merge: true });
+	const docSnap = await setDoc(docRef, subSubData, {merge: true});
 }
