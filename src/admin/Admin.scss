@@ -1,0 +1,34 @@
+.admin {
+  display: flex;
+  min-height: 100vh;
+  font-size: 1.3rem;
+}
+
+.row {
+  display: flex;
+}
+
+.sb {
+  justify-content: space-between;
+}
+
+.fill {
+  width: 100%;
+}
+
+.mb {
+  margin-bottom: 20px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.border {
+  border: 1px solid gray;
+}

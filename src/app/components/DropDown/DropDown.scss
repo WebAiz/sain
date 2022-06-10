@@ -1,0 +1,28 @@
+.dropdown {
+  color: #fff;
+  position: relative;
+
+  &-header {
+    padding: 10px 15px;
+    background: #0147a6;
+    border-right: 1px solid #fff;
+    font-size: 1.2rem;
+  }
+
+  &-body {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+
+    :first-child {
+      border-top: 1px solid #fff;
+    }
+
+    p {
+      padding: 10px 10px;
+      background: #0147a6;
+      border-bottom: 1px solid #fff;
+    }
+  }
+}

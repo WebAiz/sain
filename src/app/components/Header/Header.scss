@@ -1,0 +1,20 @@
+.header {
+  position: fixed;
+  background: #fff;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
+
+  &-top {
+    background: #F6F6F7;
+  }
+
+  &-middle {
+    display: flex;
+    align-items: center;
+
+  }
+
+  &-bottom {
+    display: flex;
+    width: 100%;
+  }
+}

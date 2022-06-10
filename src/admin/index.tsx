@@ -4,8 +4,7 @@ import {Sidebar} from '../components/Sidebar/Sidebar';
 import {Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {auth} from '../firebase';
-
-import '../index.scss';
+import './Admin.scss';
 
 function Admin() {
   const [user, loading, error] = useAuthState(auth);
@@ -17,13 +16,13 @@ function Admin() {
     if (!user) return navigate('/admin');
   }, [location.pathname]);
   return (
-    <div className="App">
-      {!user && <Login />}
-      {user && <Sidebar />}
-      {user &&
-        <Outlet />
-      }
-    </div>
+      <div className="admin">
+        {!user && <Login />}
+        {user && <Sidebar />}
+        {user &&
+          <Outlet />
+        }
+      </div>
   );
 }
 
