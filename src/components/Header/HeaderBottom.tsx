@@ -2,14 +2,17 @@
 import * as React from 'react';
 import {DropDown} from '../DropDown';
 
-type Props = {};
+type Props = {
+  headerData: any,
+  navigateToBlogs: any
+};
 
-export function HeaderBottom(props: Props) {
-  const arr = new Array(6).fill('df');
+export function HeaderBottom({headerData, navigateToBlogs}: Props) {
+
   return (
       <div className={'header-bottom'}>
-        {arr.map((el, i) => (
-            <DropDown key={i} />
+        {headerData.map((el, i) => (
+            <DropDown key={i} data={el} navigateToBlogs={navigateToBlogs} />
         ))}
       </div>
   );

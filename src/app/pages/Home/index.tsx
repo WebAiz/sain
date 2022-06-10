@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import {SmallBlock} from '../../../components/SmallBlock';
 
 type Props = {};
 
@@ -10,7 +9,8 @@ export function Home(props: Props) {
       <main>
         <div className="block-list">
           {arr.map((el, i) => (
-              <SmallBlock key={i} />
+              // <SmallBlock key={i} />
+              <div>home</div>
           ))}
         </div>
       </main>

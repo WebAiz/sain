@@ -3,26 +3,30 @@ import * as React from 'react';
 import './SmallBlock.scss';
 import {useNavigate} from 'react-router-dom';
 
-type Props = {};
-
-const data = {
-  title: 'dsfsdf dsfsd sdfsdf sdfsdfs dsfs',
-  description: 'fsdfsd sdfsdfsdf sdfsdfsd sdf',
+type Props = {
+  data: any,
+  imgUrl: any,
+  sectionId: any,
+  blogsId: any
 };
 
+
 export function SmallBlock(props: Props) {
+  const {sectionId, blogsId, data, imgUrl} = props;
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/blog/1/1');
+    navigate(`/blog/${sectionId}/${blogsId}/${data.id}`);
   };
   return (
       <div onClick={handleClick} className={'block'}>
-        <img src="/images/map.png" alt="block" />
+        <div className={'img-wrapper'}>
+          <img src={imgUrl} alt="block" />
+        </div>
+
         <div className={'block-content'}>
           <h2>{data.title}</h2>
           <p>{data.description}</p>
         </div>
-
       </div>
   );
 }

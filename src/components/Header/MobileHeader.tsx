@@ -6,14 +6,13 @@ import './Header.scss';
 import {MobileDropDown} from '../DropDown/MobileDropDown';
 import CloseIcon from '@mui/icons-material/Close';
 
-type Props = {};
+type Props = {
+  headerData: any,
+  navigateToBlogs: any
+};
 
-export function MobileHeader(props: Props) {
+export function MobileHeader({headerData, navigateToBlogs}: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const toggleMenu = () => {
-    setIsOpen((isOpen) => !isOpen);
-  };
-  const arr = new Array(6).fill(0);
   return (
       <header className={'header'}>
         {isOpen ? <CloseIcon
@@ -22,8 +21,8 @@ export function MobileHeader(props: Props) {
             : <MenuIcon className={'burger'} onClick={() => setIsOpen(true)} />}
         {isOpen &&
           <div className="menu">
-            {arr.map((el, i) => (
-                <MobileDropDown key={i} />
+            {headerData.map((el, i) => (
+                <MobileDropDown navigateToBlogs={navigateToBlogs} data={el} key={i} />
             ))}
           </div>
         }

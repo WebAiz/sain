@@ -3,25 +3,24 @@ import * as React from 'react';
 import {useState} from 'react';
 import './DropDown.scss';
 
-type Props = {};
-
-const data = {
-  title: 'temp title',
-  list: [{title: 'dsfsd', slug: '1'}, {title: 'sdfsd', slug: '2'}],
+type Props = {
+  data: any,
+  navigateToBlogs: any
 };
 
-export function DropDown(props: Props) {
+export function DropDown({data, navigateToBlogs}: Props) {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
       <div className={'dropdown'}
            onMouseOver={() => setIsOpen(true)}
            onMouseLeave={() => setIsOpen(false)}>
         <div className={'dropdown-header'}>
-          {data.title}
+          {data.header.name}
         </div>
         {isOpen && <div className={'dropdown-body'}>
           {data.list.map((el, i) => (
-              <p key={i}>{el.title}</p>
+              <p onClick={() => navigateToBlogs(data.header.id, el.id)} key={i}>{el.name}</p>
           ))}
         </div>}
       </div>

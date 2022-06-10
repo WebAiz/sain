@@ -17,6 +17,7 @@ import {Contacts} from '../admin/pages/Contacts/Contacts';
 import {ChildYear} from '../admin/pages/ChildYear/ChildYear';
 import {Stuff} from '../admin/pages/Stuff/Stuff';
 import {Ceo} from '../admin/pages/CEO/CEO';
+import {Blogs} from './pages/Blogs';
 
 type Props = {};
 
@@ -26,7 +27,8 @@ export default function App(props: Props) {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="blog/:sectionId/:blogId" element={<Blog />} />
+            <Route path="blog/:sectionId/:blogsId/:blogId" element={<Blog />} />
+            <Route path="blogs/:sectionId/:blogsId" element={<Blogs />} />
           </Route>
           <Route path="admin" element={<Admin />}>
             <Route index element={<Dashboard />} />

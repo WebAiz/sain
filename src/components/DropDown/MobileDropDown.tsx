@@ -4,28 +4,29 @@ import {useState} from 'react';
 import './DropDown.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import {useNavigate} from 'react-router-dom';
 
-type Props = {};
-
-const data = {
-  title: 'temp title',
-  list: [{title: 'dsfsd', slug: '1'}, {title: 'sdfsd', slug: '2'}],
+type Props = {
+  data: any,
+  navigateToBlogs: any
 };
 
-export function MobileDropDown(props: Props) {
+export function MobileDropDown({data, navigateToBlogs}: Props) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   const toggleOpen = () => {
     setIsOpen(prevState => !prevState);
   };
+
   return (
       <div className={'dropdown'} onClick={toggleOpen}>
         <div className={'dropdown-header'}>
-          {data.title}
+          {data?.header?.name}
           {isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
         </div>
         {isOpen && <div className={'dropdown-body'}>
-          {data.list.map((el, i) => (
-              <p key={i}>{el.title}</p>
+          {data?.list && data?.list.map((el, i) => (
+              <p onClick={() => navigateToBlogs(data.header.id, el.id)} key={i}>{el?.name}</p>
           ))}
         </div>}
       </div>
