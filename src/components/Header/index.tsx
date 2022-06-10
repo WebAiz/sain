@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useContext, useEffect, useState} from 'react';
 import {HeaderTop} from './HeaderTop';
 import {HeaderMiddle} from './HeaderMiddle';
 import {HeaderBottom} from './HeaderBottom';
@@ -8,6 +8,7 @@ import './Header.scss';
 import {MobileHeader} from './MobileHeader';
 import {getCollectionDocs, getSubCollectionDocs} from '../../helper';
 import {useNavigate} from 'react-router-dom';
+import {LoaderContext} from '../Layout';
 
 type Props = {};
 
@@ -15,6 +16,8 @@ export function Header(props: Props) {
   const isDesktop = window.innerWidth > 1024;
   const [headerData, setHeaderData] = useState([]);
   const navigate = useNavigate();
+  const setIsLoading = useContext(LoaderContext);
+
 
   const getData = useCallback(async () => {
     const res = await getCollectionDocs('common_pages');
@@ -33,6 +36,7 @@ export function Header(props: Props) {
   }, []);
 
   const navigateToBlogs = (sectionID, blogsID) => {
+    // setIsLoading(true);
     navigate(`/blogs/${sectionID}/${blogsID}`);
   };
 

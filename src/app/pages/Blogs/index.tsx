@@ -1,16 +1,18 @@
 // @flow
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {getSubSubCollectionDocs} from '../../../helper';
 import {useParams} from 'react-router-dom';
 import {SmallBlock} from '../../../components/SmallBlock';
 import {getImages} from '../../../components/Images/Images';
+import {LoaderContext} from '../../../components/Layout';
 
 type Props = {};
 
 export function Blogs(props: Props) {
   const {sectionId, blogsId} = useParams();
   const [blogs, setBlogs] = useState([]);
+  const setIsLoading = useContext(LoaderContext);
 
   async function getBlogs() {
     const res = await getSubSubCollectionDocs({
@@ -25,7 +27,6 @@ export function Blogs(props: Props) {
       const images = await getImages(blog.id);
       completeData.push({blog, images});
     }
-
     setBlogs(completeData);
   }
 

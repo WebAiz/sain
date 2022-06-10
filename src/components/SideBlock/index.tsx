@@ -13,7 +13,7 @@ export function SideBlock({ceo}: Props) {
         <img src={ceo.url} alt="avatar" />
         <div className={'sideblock-body'}>
           <h2>{ceo.name}</h2>
-          <button className={'submit-btn'}>Ask stmg</button>
+          <button className={'submit-btn'}>Cұрақ қою</button>
           <Contacts />
         </div>
 

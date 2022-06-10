@@ -16,7 +16,7 @@ export function HeaderTop(props: Props) {
       <div className={'header-top'}>
         <Button onClick={goToAdminPage}>
           <SensorDoorOutlinedIcon />
-          <span>Enter</span>
+          <span>Кіру</span>
         </Button>
       </div>
   );
