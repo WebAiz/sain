@@ -1,6 +1,7 @@
 .dropdown {
   color: #fff;
   position: relative;
+  transition: 0.3s linear;
 
   &-header {
     padding: 10px 15px;
@@ -23,6 +24,31 @@
       padding: 10px 10px;
       background: #0147a6;
       border-bottom: 1px solid #fff;
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .dropdown {
+    background: #0147a6;
+    padding: 10px;
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+      border-right: none;
+      border-bottom: 1px solid #fff;
+      padding: 5px 0;
+
+    }
+
+    &-body {
+      position: initial;
+      padding: 5px;
+
+      :first-child {
+        border-top: none;
+      }
     }
   }
 }

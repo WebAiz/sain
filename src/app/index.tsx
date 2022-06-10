@@ -5,7 +5,7 @@ import {Home} from './pages/Home';
 import Reset from '../components/auth/Reset/Reset';
 import {Images} from '../components/Images/Images';
 import Register from '../components/auth/Register';
-import {Layout} from './components/Layout';
+import {Layout} from '../components/Layout';
 import {Blog} from './pages/Blog';
 
 // admin components

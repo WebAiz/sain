@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {SmallBlock} from '../../components/SmallBlock';
+import {SmallBlock} from '../../../components/SmallBlock';
 
 type Props = {};
 
