@@ -9,7 +9,7 @@ import Layout from '../components/Layout';
 import Blog from './pages/Blog';
 import ChildYearApp from './pages/ChildYearApp';
 import ContactsApp from '../components/Contacts';
-import StuffApp from './pages/Stuff';
+import StuffApp from './pages/StuffApp';
 
 // admin components
 import Admin from '../admin/Admin';
