@@ -1,1 +1,2 @@
-export {Contacts as default} from './Contacts';
+export {ContactsApp as default} from './ContactsApp';
+export {ContactPhones} from './ContactPhones';

@@ -1,10 +1,8 @@
-import {useCallback, useEffect, useState} from 'react';
 import './Contacts.scss';
+import {useCallback, useEffect, useState} from 'react';
 import {getContactsData} from '../../admin/pages/Contacts/Contacts';
 
-type Props = {};
-
-export function Contacts(props: Props) {
+export function ContactPhones() {
   const [contacts, setContacts] = useState({
     telOne: '',
     telTwo: '',
@@ -15,6 +13,7 @@ export function Contacts(props: Props) {
   useEffect(() => {
     fetchContacts();
   }, []);
+  console.log(contacts);
   return (
       <div className="contacts">
         <div className={'contacts-row'}>

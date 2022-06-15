@@ -1,5 +1,5 @@
 import './Footer.scss';
-import Contacts from '../Contacts';
+import {ContactPhones} from '../Contacts';
 
 type Props = {};
 
@@ -7,7 +7,7 @@ export function Footer(props: Props) {
   return (
       <footer className={'footer'}>
         <img src="/images/logo.png" alt="logo" />
-        <Contacts />
+        <ContactPhones />
       </footer>
   );
 }

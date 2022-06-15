@@ -1,5 +1,5 @@
 import './SideBlock.scss';
-import Contacts from '../Contacts';
+import {ContactPhones} from '../Contacts';
 
 type Props = {
   ceo: any
@@ -12,7 +12,7 @@ export function SideBlock({ceo}: Props) {
         <div className={'sideblock-body'}>
           <h2>{ceo.name}</h2>
           <button className={'submit-btn'}>Cұрақ қою</button>
-          <Contacts />
+          <ContactPhones />
         </div>
 
       </div>

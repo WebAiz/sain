@@ -7,6 +7,8 @@ import Images from '../components/Images';
 import Register from '../components/auth/Register';
 import Layout from '../components/Layout';
 import Blog from './pages/Blog';
+import ChildYearApp from './pages/ChildYearApp';
+import ContactsApp from '../components/Contacts';
 
 // admin components
 import Admin from '../admin/Admin';
@@ -18,7 +20,6 @@ import Stuff from '../admin/pages/Stuff';
 import Ceo from '../admin/pages/CEO';
 import Blogs from './pages/Blogs';
 import ChildYear from '../admin/pages/ChildYear';
-import ChildYearApp from './pages/ChildYearApp';
 
 type Props = {};
 
@@ -31,6 +32,7 @@ export default function App(props: Props) {
             <Route path="blog/:sectionId/:blogsId/:blogId" element={<Blog />} />
             <Route path="blogs/:sectionId/:blogsId" element={<Blogs />} />
             <Route path="child-year" element={<ChildYearApp />} />
+            <Route path="contacts" element={<ContactsApp />} />
           </Route>
           <Route path="admin" element={<Admin />}>
             <Route index element={<Dashboard />} />

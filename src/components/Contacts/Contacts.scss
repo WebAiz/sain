@@ -1,6 +1,12 @@
 .contacts {
+  padding: 20px 0;
+
   &-phone {
     font-weight: bold;
     font-size: 1.2rem;
+  }
+
+  &-row {
+    margin-bottom: 10px;
   }
 }

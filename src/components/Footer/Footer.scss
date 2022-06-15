@@ -1,6 +1,11 @@
 .footer {
   display: flex;
   justify-content: space-between;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 @media screen and (max-width: 1024px) {
@@ -8,10 +13,5 @@
     flex-direction: column;
     gap: 10px;
     padding-bottom: 20px;
-
-    img {
-      width: 100px;
-      height: 100px;
-    }
   }
 }
