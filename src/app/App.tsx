@@ -9,6 +9,7 @@ import Layout from '../components/Layout';
 import Blog from './pages/Blog';
 import ChildYearApp from './pages/ChildYearApp';
 import ContactsApp from '../components/Contacts';
+import StuffApp from './pages/Stuff';
 
 // admin components
 import Admin from '../admin/Admin';
@@ -33,6 +34,7 @@ export default function App(props: Props) {
             <Route path="blogs/:sectionId/:blogsId" element={<Blogs />} />
             <Route path="child-year" element={<ChildYearApp />} />
             <Route path="contacts" element={<ContactsApp />} />
+            <Route path="stuff" element={<StuffApp />} />
           </Route>
           <Route path="admin" element={<Admin />}>
             <Route index element={<Dashboard />} />

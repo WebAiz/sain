@@ -3,7 +3,8 @@ export enum ROUTES {
   CONTACTS = '/contacts/',
   CHILD_YEAR = '/child-year/',
   BLOGS = '/blogs/',
-  BLOG = '/blog/'
+  BLOG = '/blog/',
+  STUFF = '/stuff/',
 }
 
 export enum ADMIN_ROUTES {

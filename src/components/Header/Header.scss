@@ -13,7 +13,16 @@
   &-middle {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    max-height: 200px;
+    padding: 10px 0;
+    height: 150px;
 
+    img {
+      height: 100%;
+      max-width: 200px;
+      object-fit: contain;
+    }
   }
 
   &-bottom {
@@ -33,6 +42,17 @@
     .menu {
       padding: 20px 5px;
       background: #0147a6;
+    }
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    &-middle {
+      .main-logo {
+        display: none;
+      }
     }
   }
 

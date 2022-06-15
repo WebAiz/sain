@@ -1,12 +1,13 @@
 import {useState} from 'react';
 import './DropDown.scss';
+import {ROUTES} from '../../constants';
 
 type Props = {
   data: any,
-  navigateToBlogs: any
+  navigate: any
 };
 
-export function DropDown({data, navigateToBlogs}: Props) {
+export function DropDown({data, navigate}: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,7 +19,7 @@ export function DropDown({data, navigateToBlogs}: Props) {
         </div>
         {isOpen && <div className={'dropdown-body'}>
           {data.list.map((el, i) => (
-              <p onClick={() => navigateToBlogs(data.header.id, el.id)} key={i}>{el.name}</p>
+              <p onClick={() => navigate(ROUTES.BLOGS + data.header.id + '/' + el.id)} key={i}>{el.name}</p>
           ))}
         </div>}
       </div>

@@ -5,7 +5,7 @@ import {HeaderTop} from './HeaderTop';
 import {HeaderMiddle} from './HeaderMiddle';
 import {HeaderBottom} from './HeaderBottom';
 import './Header.scss';
-import {MobileHeader} from './MobileHeader';
+import {HeaderMobile} from './HeaderMobile';
 import {getCollectionDocs, getSubCollectionDocs} from '../../helper';
 import {useNavigate} from 'react-router-dom';
 
@@ -45,9 +45,9 @@ export function Header(props: Props) {
         {isDesktop ?
             <>
               <HeaderMiddle />
-              <HeaderBottom navigateToBlogs={navigateToBlogs} headerData={headerData} />
+              <HeaderBottom navigate={navigate} headerData={headerData} />
             </> :
-            <MobileHeader navigateToBlogs={navigateToBlogs} headerData={headerData} />
+            <HeaderMobile navigate={navigate} headerData={headerData} />
         }
       </header>
   );

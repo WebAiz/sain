@@ -2,16 +2,15 @@ import {useState} from 'react';
 import './DropDown.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import {useNavigate} from 'react-router-dom';
+import {ROUTES} from '../../constants';
 
 type Props = {
   data: any,
-  navigateToBlogs: any
+  navigate: any
 };
 
-export function MobileDropDown({data, navigateToBlogs}: Props) {
+export function MobileDropDown({data, navigate}: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
   const toggleOpen = () => {
     setIsOpen(prevState => !prevState);
   };
@@ -24,7 +23,7 @@ export function MobileDropDown({data, navigateToBlogs}: Props) {
         </div>
         {isOpen && <div className={'dropdown-body'}>
           {data?.list && data?.list.map((el, i) => (
-              <p onClick={() => navigateToBlogs(data.header.id, el.id)} key={i}>{el?.name}</p>
+              <p onClick={() => navigate(ROUTES.BLOGS + data.header.id + '/' + el.id)} key={i}>{el?.name}</p>
           ))}
         </div>}
       </div>
