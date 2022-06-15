@@ -1,0 +1,29 @@
+.message {
+  min-width: 320px;
+  padding: 10px;
+
+  &-body {
+  }
+
+  &-field {
+  }
+
+  &-input {
+    border: 1px solid #dcdcdc;
+    width: 100%;
+    border-radius: 4px;
+    resize: none;
+    margin: 5px 0 10px;
+    height: 30px;
+    padding: 0 20px;
+
+    &:focus {
+      border: 1px solid cornflowerblue;
+    }
+  }
+
+  button {
+    margin: 0 auto;
+  }
+}
+
