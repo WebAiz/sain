@@ -13,7 +13,6 @@ export function ContactPhones() {
   useEffect(() => {
     fetchContacts();
   }, []);
-  console.log(contacts);
   return (
       <div className="contacts">
         <div className={'contacts-row'}>

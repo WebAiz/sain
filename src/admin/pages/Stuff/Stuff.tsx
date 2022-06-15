@@ -5,6 +5,39 @@ import {addNewDoc, editDoc, getCollectionDocs} from '../../../helper';
 
 type Props = {};
 
+export async function getStuffImgUrl(id, name) {
+  const starsRef = ref(storage, `stuff/${id}/${name}`);
+  return await getDownloadURL(starsRef);
+}
+
+export async function getImages(docID) {
+  const listRef = ref(storage, `stuff/${docID}`);
+  return await listAll(listRef)
+      .then(async (res) => {
+        if (res.items && res.items[0] && res.items[0].name) {
+          const imgUrl = await getStuffImgUrl(docID, res.items[0].name);
+          const imgName = res.items[0].name;
+          return {imgUrl, imgName};
+        }
+        return {imgUrl: '', imgName: ''};
+      })
+      .catch((error) => {
+        console.log('Uh-oh, an error occurred!');
+        return {imgUrl: '', imgName: ''};
+      });
+}
+
+export async function getStuffs(setCb) {
+  const newArr = [];
+  await getCollectionDocs('stuff').then(async list => {
+    for (const item of list) {
+      const {imgUrl, imgName} = await getImages(item.id);
+      newArr.push({...item, imgUrl, id: item.id, imgName});
+    }
+  });
+  setCb(newArr);
+}
+
 export function Stuff(props: Props) {
   const [stuffs, setStuffs] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
@@ -32,7 +65,7 @@ export function Stuff(props: Props) {
       description: data.description,
     });
     if (docRef.id) alert('Data successfully Added');
-    if (data.img) uploadImage(docRef.id, data.img, null);
+    if (data.img) uploadImage(docRef.id, data.img, 'stuff.png');
     else alert('Error with IMG');
 
     resetData();
@@ -121,39 +154,6 @@ export function Stuff(props: Props) {
     );
   }
 
-  const getImages = async (docID) => {
-    const listRef = ref(storage, `stuff/${docID}`);
-    return await listAll(listRef)
-        .then(async (res) => {
-          if (res.items && res.items[0] && res.items[0].name) {
-            const imgUrl = await getImageUrl(docID, res.items[0].name);
-            const imgName = res.items[0].name;
-            return {imgUrl, imgName};
-          }
-          return {imgUrl: '', imgName: ''};
-        })
-        .catch((error) => {
-          console.log('Uh-oh, an error occurred!');
-          return {imgUrl: '', imgName: ''};
-        });
-  };
-
-  async function getImageUrl(id, name) {
-    const starsRef = ref(storage, `stuff/${id}/${name}`);
-    return await getDownloadURL(starsRef);
-  }
-
-  async function getStuffs() {
-    const newArr = [];
-    await getCollectionDocs('stuff').then(async list => {
-      for (const item of list) {
-        const {imgUrl, imgName} = await getImages(item.id);
-        newArr.push({...item, imgUrl, id: item.id, imgName});
-      }
-    });
-    setStuffs(newArr);
-  }
-
   function editStuff(stuff) {
     setEditData(stuff);
     setEditMode(true);
@@ -161,7 +161,7 @@ export function Stuff(props: Props) {
 
 
   useEffect(() => {
-    getStuffs();
+    getStuffs(setStuffs);
   }, []);
 
   return (
