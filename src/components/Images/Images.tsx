@@ -7,28 +7,6 @@ import {useParams} from 'react-router-dom';
 
 type Props = {};
 
-export async function getImgUrl(blogId, imgName) {
-  const starsRef = ref(storage, `${blogId}/${imgName}`);
-  return await getDownloadURL(starsRef);
-}
-
-export const getImages = async (blogID) => {
-  const listRef = ref(storage, blogID);
-  const images = await listAll(listRef)
-      .then(async (res) => {
-        const imgList = [];
-        for (const itemRef of res.items) {
-          const url = await getImgUrl(blogID, itemRef.name);
-          imgList.push({name: itemRef.name, url});
-        }
-        return imgList;
-      }).catch((error) => {
-        alert('Uh-oh, an error occurred!');
-        return [];
-      });
-  return images;
-};
-
 export function Images(props: Props) {
   const [images, setImages] = useState([]);
   const [uploadImgUrls, setUploadImgUrls] = useState([]);
@@ -46,7 +24,6 @@ export function Images(props: Props) {
   };
 
   const uploadImages = (images) => {
-    console.log('FILEs', images);
     const uploadedImages = [];
     for (const img of images) {
       if (!img) return;
@@ -69,8 +46,8 @@ export function Images(props: Props) {
       );
     }
     setUploadImgUrls(uploadedImages);
-
   };
+
   const handleImgChange = (e) => {
     if (e.target.files) {
       if (e.target.files.length + images.length > 8) {
@@ -89,6 +66,7 @@ export function Images(props: Props) {
   useEffect(() => {
     fetchImages();
   }, []);
+
   return (
       <div>
         <section className={'images__list'}>
@@ -119,4 +97,26 @@ export function Images(props: Props) {
 
       </div>
   );
+}
+
+export async function getImgUrl(blogId, imgName) {
+  const starsRef = ref(storage, `${blogId}/${imgName}`);
+  return await getDownloadURL(starsRef);
+}
+
+export async function getImages(blogID) {
+  const listRef = ref(storage, blogID);
+  const images = await listAll(listRef)
+      .then(async (res) => {
+        const imgList = [];
+        for (const itemRef of res.items) {
+          const url = await getImgUrl(blogID, itemRef.name);
+          imgList.push({name: itemRef.name, url});
+        }
+        return imgList;
+      }).catch((error) => {
+        alert('Uh-oh, an error occurred!');
+        return [];
+      });
+  return images;
 }

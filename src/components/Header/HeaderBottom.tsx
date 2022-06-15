@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {DropDown} from '../DropDown';
+import DropDown from '../DropDown';
 
 type Props = {
   headerData: any,

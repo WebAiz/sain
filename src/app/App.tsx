@@ -1,23 +1,24 @@
 // @flow
 import * as React from 'react';
 import {Route, Routes} from 'react-router-dom';
-import {Home} from './pages/Home';
-import Reset from '../components/auth/Reset/Reset';
-import {Images} from '../components/Images/Images';
+import Home from './pages/Home';
+import Reset from '../components/auth/Reset';
+import Images from '../components/Images';
 import Register from '../components/auth/Register';
-import {Layout} from '../components/Layout';
-import {Blog} from './pages/Blog';
+import Layout from '../components/Layout';
+import Blog from './pages/Blog';
 
 // admin components
-import Admin from '../admin';
-import Dashboard from '../admin/pages/Dashboard/Dashboard';
-import {CommonPages} from '../admin/pages/CommonPages/CommonPages';
-import {BlogsPage} from '../admin/pages/BlogsPage/BlogsPage';
-import {Contacts} from '../admin/pages/Contacts/Contacts';
-import {ChildYear} from '../admin/pages/ChildYear/ChildYear';
-import {Stuff} from '../admin/pages/Stuff/Stuff';
-import {Ceo} from '../admin/pages/CEO/CEO';
-import {Blogs} from './pages/Blogs';
+import Admin from '../admin/Admin';
+import Dashboard from '../admin/pages/Dashboard';
+import CommonPages from '../admin/pages/CommonPages';
+import BlogsPage from '../admin/pages/BlogsPage';
+import Contacts from '../admin/pages/Contacts';
+import Stuff from '../admin/pages/Stuff';
+import Ceo from '../admin/pages/CEO';
+import Blogs from './pages/Blogs';
+import ChildYear from '../admin/pages/ChildYear';
+import ChildYearApp from './pages/ChildYearApp';
 
 type Props = {};
 
@@ -29,6 +30,7 @@ export default function App(props: Props) {
             <Route index element={<Home />} />
             <Route path="blog/:sectionId/:blogsId/:blogId" element={<Blog />} />
             <Route path="blogs/:sectionId/:blogsId" element={<Blogs />} />
+            <Route path="child-year" element={<ChildYearApp />} />
           </Route>
           <Route path="admin" element={<Admin />}>
             <Route index element={<Dashboard />} />

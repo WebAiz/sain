@@ -1,5 +1,3 @@
-// @flow
-import * as React from 'react';
 import {useState} from 'react';
 import './DropDown.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';

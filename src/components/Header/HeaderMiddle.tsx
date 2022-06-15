@@ -1,4 +1,4 @@
-import {Contacts} from '../Contacts';
+import Contacts from '../Contacts';
 import {useNavigate} from 'react-router-dom';
 
 type Props = {};

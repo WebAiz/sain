@@ -11,7 +11,6 @@ function Admin() {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
-    console.log('APP UPDATE', user);
     if (loading) return;
     if (!user) return navigate('/admin');
   }, [location.pathname]);

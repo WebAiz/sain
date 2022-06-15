@@ -14,7 +14,8 @@ export function Sidebar(props: Props) {
   const [newPage, setNewPage] = useState('');
   const addNewPage = () => {
     if (newPage.length) {
-      addNewDoc('common_pages', {name: newPage}).then(res => console.log('RES', res));
+      addNewDoc('common_pages', {name: newPage})
+          .then(res => console.log('addNewPage', res));
       setNewPage('');
       setAddPageOpen(false);
     }
@@ -25,7 +26,6 @@ export function Sidebar(props: Props) {
   }
 
   useEffect(() => {
-    console.log('SIDEBAR UPDATE');
     getData();
   }, []);
   return (
@@ -33,7 +33,7 @@ export function Sidebar(props: Props) {
         <div className="sidebar__links">
           <a className={'mb'} href="/">Главная страница</a>
           <h3 className={'mb-10'}>Общие Разделы</h3>
-          <DropDown data={pages} setData={setPages} />
+          <DropDown data={pages} />
           <button onClick={() => setAddPageOpen(true)}>Добавить общий Раздел</button>
           {addPageOpen && <div>
             <input type="text" value={newPage} onChange={(e) => setNewPage(e.target.value)} />
