@@ -10,15 +10,15 @@ import {editDoc} from '../../../helper';
 export interface Page {
   id: string,
   name: string,
+  setData: any
 }
 
-export function DropDown({data}) {
+export function DropDown({data,getData}) {
   const [openModal, setOpenModal] = useState(false);
   const [page, setPage] = useState({
     id: '',
     name: '',
   });
-  const navigate = useNavigate();
   const handleEdit = (page: any) => {
     setOpenModal(true);
     setPage(page);
@@ -27,7 +27,7 @@ export function DropDown({data}) {
     editDoc('common_pages', page.id, {name: page.name}).then((res) => {
       setOpenModal(false);
       setPage({id: '', name: ''});
-      window.location.reload();
+      getData()
     });
 
   };

@@ -1,10 +1,15 @@
 // @flow
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {addSubSubCollectionDoc, editSubSubCollectionDoc, getSubSubCollectionDocs} from '../../../helper';
+import {
+  addSubSubCollectionDoc,
+  editSubSubCollectionDoc,
+  getSubSubCollectionDocs,
+} from '../../../helper';
 import {useNavigate, useParams} from 'react-router-dom';
 import './BlogsPage.scss';
 import {ADMIN_ROUTES} from '../../../constants';
+import Modal from '../../../components/Modal';
 
 type Props = {};
 
@@ -28,13 +33,19 @@ export function BlogsPage(props: Props) {
         subSubColRef: 'blogs',
         subSubData: {title: blog.title, description: blog.description},
       });
-      window.location.reload();
+      setOpenEdit(false);
+      getBlogs();
     }
   };
   const handleEditClick = (blog) => {
     setBlog(blog);
     setOpenEdit(true);
     setIsEditMode(true);
+  };
+
+  const handleAddClick = () => {
+    setIsEditMode(false);
+    setOpenEdit(true);
   };
 
   function getBlogs() {
@@ -56,8 +67,10 @@ export function BlogsPage(props: Props) {
       subSubColRef: 'blogs',
       subSubDocRef: blog.id,
       subSubData: {title: blog.title, description: blog.description},
-    }).then(() => setOpenEdit(false));
-    window.location.reload();
+    }).then(() => {
+      setOpenEdit(false);
+      getBlogs();
+    });
   };
   const goToImagesPage = (blog) => {
     navigate(ADMIN_ROUTES.IMAGES + `${blog.id}`);
@@ -66,44 +79,48 @@ export function BlogsPage(props: Props) {
     getBlogs();
   }, []);
   return (
-      <main className={'subPage'}>
-        <h1>Блоги</h1>
-        <section className="list mb ">
-          <div className={'blog-row sb mb-10 p-10 bg-gray'}>
+    <main className={'subPage'}>
+      <h1>Блоги</h1>
+      <section className="list mb ">
+        <div className={'blog-row sb mb-10 p-10 bg-gray'}>
+          {/*<img src={blog.img[0]} alt="blog" />*/}
+          <span>Заголовок</span>
+          <span>Описание</span>
+          <div></div>
+        </div>
+        {blogList.map((blog, index) => (
+          <div key={index} className={'blog-row  sb mb-10 p-10 bg-gray'}>
             {/*<img src={blog.img[0]} alt="blog" />*/}
-            <span>Заголовок</span>
-            <span>Описание</span>
-            <div></div>
+            <span>{blog.title}</span>
+            <span>{blog.description}</span>
+            <button onClick={() => handleEditClick(blog)}>Редактировать</button>
+            <button onClick={() => goToImagesPage(blog)}>Настроить картины
+            </button>
           </div>
-          {blogList.map((blog, index) => (
-              <div key={index} className={'blog-row  sb mb-10 p-10 bg-gray'}>
-                {/*<img src={blog.img[0]} alt="blog" />*/}
-                <span>{blog.title}</span>
-                <span>{blog.description}</span>
-                <button onClick={() => handleEditClick(blog)}>Редактировать</button>
-                <button onClick={() => goToImagesPage(blog)}>Настроить картины</button>
-              </div>
-          ))}
+        ))}
+      </section>
+      <button className={'mb'} onClick={handleAddClick}>
+        Добавить блог
+      </button>
+      {openEdit && <Modal onClose={() => setOpenEdit(false)}>
+        <section>
+          <div className={'form col border'}>
+            <label htmlFor="">Заголовок</label>
+            <input type="text" value={blog.title}
+                   onChange={(e) => setBlog({...blog, title: e.target.value})}/>
+            <label htmlFor="">Описание</label>
+
+            <textarea value={blog.description}
+                      onChange={(e) => setBlog({
+                        ...blog,
+                        description: e.target.value,
+                      })}/>
+
+            {!isEditMode && <button onClick={addBlog}>Добавить</button>}
+            {isEditMode && <button onClick={editBlog}>Сохранить</button>}
+          </div>
         </section>
-        <button className={'mb'} onClick={() => setOpenEdit(true)}>
-          Добавить блог
-        </button>
-        {openEdit && (
-            <section>
-              <div className={'form col border'}>
-                <label htmlFor="">Заголовок</label>
-                <input type="text" value={blog.title}
-                       onChange={(e) => setBlog({...blog, title: e.target.value})} />
-                <label htmlFor="">Описание</label>
-
-                <textarea value={blog.description}
-                          onChange={(e) => setBlog({...blog, description: e.target.value})} />
-
-                {!isEditMode && <button onClick={addBlog}>Добавить</button>}
-                {isEditMode && <button onClick={editBlog}>Сохранить</button>}
-              </div>
-            </section>
-        )}
-      </main>
+      </Modal>}
+    </main>
   );
 }

@@ -3,8 +3,12 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {ADMIN_ROUTES} from '../../../constants';
-import {addSubCollectionDoc, editSubCollectionDoc, getSubCollectionDocs} from '../../../helper';
-import {Modal} from '../../../components/common/Modal/Modal';
+import {
+  addSubCollectionDoc,
+  editSubCollectionDoc,
+  getSubCollectionDocs,
+} from '../../../helper';
+import Modal from '../../../components/Modal';
 
 export interface list {
   id: number,
@@ -56,14 +60,14 @@ export function CommonPages() {
         subColRef: 'sub_pages',
         subDocData: {name: subPage.name},
       })
-          .then((res) => {
-            setOpenForm(false);
-            getSubCollectionDocs({
-              colRef: 'common_pages',
-              docID: slug || '',
-              subColRef: 'sub_pages',
-            }).then(res => setDocs(res));
-          });
+        .then((res) => {
+          setOpenForm(false);
+          getSubCollectionDocs({
+            colRef: 'common_pages',
+            docID: slug || '',
+            subColRef: 'sub_pages',
+          }).then(res => setDocs(res));
+        });
     }
   };
   const handleEditClick = (page) => {
@@ -90,25 +94,30 @@ export function CommonPages() {
   }, []);
 
   return (
-      <main className={'commonPages'}>
-        <h2>Подразделы</h2>
-        <section className="commonPages__list col mb">
-          {docs.map((page, index) => (
-              <div className={'row sb mb-10 bg-gray p-10'} key={index}>
-                <a href={ADMIN_ROUTES.PAGES + slug + '/' + page.id}>{page.name}</a>
-                <button onClick={() => handleEditClick(page)}>Редактировать</button>
-              </div>
-          ))}
-        </section>
-        <button className={'mb'} onClick={handleAddClick}>Добавить подразделы</button>
-        {openForm && <Modal>
-          <div className={'row sb border p-10'}>
-            <input type="text" value={subPage.name}
-                   onChange={(e) => setSubPage({...subPage, name: e.target.value})} />
-            {!isEditMode && <button onClick={addSubPages}>Добавить</button>}
-            {isEditMode && <button onClick={saveEdit}>Сохранить изменения</button>}
+    <main className={'commonPages'}>
+      <h2>Подразделы</h2>
+      <section className="commonPages__list col mb">
+        {docs.map((page, index) => (
+          <div className={'row sb mb-10 bg-gray p-10'} key={index}>
+            <a href={ADMIN_ROUTES.PAGES + slug + '/' + page.id}>{page.name}</a>
+            <button onClick={() => handleEditClick(page)}>Редактировать</button>
           </div>
-        </Modal>}
-      </main>
+        ))}
+      </section>
+      <button className={'mb'} onClick={handleAddClick}>Добавить подразделы
+      </button>
+      {openForm && <Modal onClose={() => setOpenForm(false)}>
+        <div className={'col sb border p-10'}>
+          <input placeholder={'название подраздела'} className={'mb'} type="text" value={subPage.name}
+                 onChange={(e) => setSubPage({
+                   ...subPage,
+                   name: e.target.value,
+                 })}/>
+          {!isEditMode && <button onClick={addSubPages}>Добавить новый подраздел</button>}
+          {isEditMode &&
+            <button onClick={saveEdit}>Сохранить изменения</button>}
+        </div>
+      </Modal>}
+    </main>
   );
 }

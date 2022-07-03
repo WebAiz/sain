@@ -6,13 +6,10 @@
   background: #0147a6;
   color: #fff;
   outline: none;
-  border: none;
+  border-right: 1px solid #fff;
   vertical-align: middle;
   padding: 5px 10px;
   transition: 0.3s linear;
 }
 
-.button:hover {
-  opacity: 0.8;
-  transform: scale(1.1);
-}
+

@@ -16,10 +16,10 @@ export function Images(props: Props) {
   const deleteImg = (imgName) => {
     const desertRef = ref(storage, `${slug}/${imgName}`);
     deleteObject(desertRef).then(() => {
-      alert('File deleted successfully');
-      window.location.reload();
+      alert('Картина удалена');
+      fetchImages();
     }).catch((error) => {
-      alert('Uh-oh, an error occurred!');
+      alert('Ошибка!');
     });
   };
 
@@ -34,6 +34,7 @@ export function Images(props: Props) {
           (snapshot) => {
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             setProgressPercent(progress);
+            fetchImages();
           },
           (error) => {
             alert(error);
@@ -51,7 +52,7 @@ export function Images(props: Props) {
   const handleImgChange = (e) => {
     if (e.target.files) {
       if (e.target.files.length + images.length > 8) {
-        alert('MAX 8 images');
+        alert('Максимум 8 картинок');
       } else {
         uploadImages(e.target.files);
       }
@@ -80,12 +81,12 @@ export function Images(props: Props) {
         </section>
         <section className={'images__control'}>
           <input multiple name="files" type="file" onChange={handleImgChange} />
-          {!!uploadImgUrls.length &&
-            <div className="images__upload">
-              {uploadImgUrls.map(url => (
-                  <img src={url} alt="uploaded file" height={200} />
-              ))}
-            </div>}
+          {/*{!!uploadImgUrls.length &&*/}
+          {/*  <div className="images__upload">*/}
+          {/*    {uploadImgUrls.map(url => (*/}
+          {/*        <img src={url} alt="uploaded file" height={200} />*/}
+          {/*    ))}*/}
+          {/*  </div>}*/}
           {!uploadImgUrls.length && (
               <div className="outerbar">
                 <div className="innerbar" style={{width: `${progressPercent}%`}}>
@@ -115,7 +116,7 @@ export async function getImages(blogID) {
         }
         return imgList;
       }).catch((error) => {
-        alert('Uh-oh, an error occurred!');
+        alert('Ошибка!');
         return [];
       });
   return images;

@@ -101,7 +101,7 @@ export function CEO(props: Props) {
           </div>
           <div className={'row sb mb'}>
             <label htmlFor="">ФИО директора</label>
-            <input type="text" disabled={isDisabled} value={name} onChange={(e) => setName(e.target.value)} />
+            <input className={'fill'} type="text" disabled={isDisabled} value={name} onChange={(e) => setName(e.target.value)} />
             {isDisabled && <button onClick={() => handleEditClick()}>Редактировать ФИО</button>}
             {!isDisabled && <button onClick={() => saveEdit()}>Сохранить</button>}
           </div>

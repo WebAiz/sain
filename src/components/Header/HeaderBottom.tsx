@@ -16,10 +16,10 @@ export function HeaderBottom({headerData, navigate}: Props) {
             <DropDown key={i} data={el} navigate={navigate} />
         ))}
         <Button onClick={() => navigate(ROUTES.CONTACTS)}>
-          Контакты
+          КОНТАКТІЛЕР
         </Button>
         <Button onClick={() => navigate(ROUTES.STUFF)}>
-          Stuff
+          ЖУМЫСКЕРЛЕР
         </Button>
       </div>
   );
