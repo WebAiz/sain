@@ -17,4 +17,5 @@ export enum ADMIN_ROUTES {
   CHILD_YEAR = '/admin/child-year/',
   STUFF = '/admin/stuff/',
   CEO = '/admin/ceo/',
+  DOCS = '/admin/docs/'
 }

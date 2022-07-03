@@ -34,7 +34,7 @@ export function Blogs(props: Props) {
   return (
       <main className={'blogs'}>
         {blogs.map((el, index) => (
-            <SmallBlock sectionId={sectionId} blogsId={blogsId} data={el.blog} imgUrl={el.images[0].url} key={index} />
+            <SmallBlock sectionId={sectionId} blogsId={blogsId} data={el.blog} imgUrl={el?.images[0]?.url} key={index} />
         ))}
       </main>
   );

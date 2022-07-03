@@ -21,6 +21,7 @@ import Stuff from '../admin/pages/Stuff';
 import Ceo from '../admin/pages/CEO';
 import Blogs from './pages/Blogs';
 import ChildYear from '../admin/pages/ChildYear';
+import {DocumentList} from '../admin/pages/DocumentList/DocumentList';
 
 type Props = {};
 
@@ -47,6 +48,7 @@ export default function App(props: Props) {
             <Route path="stuff" element={<Stuff />} />
             <Route path="images/:slug" element={<Images />} />
             <Route path="ceo" element={<Ceo />} />
+            <Route path="docs/:blogId" element={<DocumentList />} />
           </Route>
         </Routes>
       </>

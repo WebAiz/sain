@@ -10,6 +10,7 @@ type Props = {};
 
 export function Blog(props: Props) {
   const [images, setImages] = useState([]);
+  const [docs, setDocs] = useState([]);
   const [data, setData] = useState({
     title: '',
     description: '',
@@ -27,21 +28,32 @@ export function Blog(props: Props) {
     });
     setData(res);
   }
+  async function fetchDocs() {
+    const docs = await getImages(`${blogId}-file`);
+    setDocs(docs);
+  }
 
   useEffect(() => {
     getBlog();
     getImages(blogId).then(list => setImages(list));
+    fetchDocs()
   }, [sectionId, blogsId, blogId]);
 
   return (
-      <main className={'blog'}>
-        <h1>{data?.title}</h1>
-        <p className={'mb'}>{data?.description}</p>
-        <div className={'blog-list'}>
-          {images.map((el, i) => (
-              <img key={i} src={el.url} alt="img" />
-          ))}
-        </div>
-      </main>
+    <main className={'blog'}>
+      <h1>{data?.title}</h1>
+      <p className={'mb'}>{data?.description}</p>
+      <div className={'blog-list'}>
+        {images.map((el, i) => (
+          <img key={i} src={el.url} alt="img"/>
+        ))}
+      </div>
+      <div className={'col'}>
+        <h3 className={'mb-10'}>Косалкы акпараттар</h3>
+        {docs.map((doc, i) => (
+          <a key={i} href={doc.url}>{doc.name}</a>
+        ))}
+      </div>
+    </main>
   );
 }

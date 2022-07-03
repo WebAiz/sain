@@ -7,13 +7,13 @@ export function HeaderMiddle(props: Props) {
   const navigate = useNavigate();
   return (
       <div className={'header-middle'}>
-        <div className={'row sb'}>
+        <div className={'row sb a-center'}>
           <img onClick={() => navigate('/')} src={'/images/logo.png'} alt="logo" />
-          <img src="/images/map.png" alt="map" />
+          <img className={'p-10'} src="/images/main-logo.jpeg" alt="map" />
           <ContactPhones />
         </div>
 
-        <img className={'main-logo'} src="/images/main-logo.jpeg" alt="main logo" />
+        <img className={'main-logo'} src="/images/map.png" alt="main logo" />
       </div>
   );
 }

@@ -75,6 +75,9 @@ export function BlogsPage(props: Props) {
   const goToImagesPage = (blog) => {
     navigate(ADMIN_ROUTES.IMAGES + `${blog.id}`);
   };
+  const goToDocPage = (blog)=>{
+    navigate(ADMIN_ROUTES.DOCS + `${blog.id}`);
+  }
   useEffect(() => {
     getBlogs();
   }, []);
@@ -89,12 +92,14 @@ export function BlogsPage(props: Props) {
           <div></div>
         </div>
         {blogList.map((blog, index) => (
-          <div key={index} className={'blog-row  sb mb-10 p-10 bg-gray'}>
+          <div key={index} className={'blog-row sb mb-10 p-10 bg-gray'}>
             {/*<img src={blog.img[0]} alt="blog" />*/}
             <span>{blog.title}</span>
             <span>{blog.description}</span>
             <button onClick={() => handleEditClick(blog)}>Редактировать</button>
             <button onClick={() => goToImagesPage(blog)}>Настроить картины
+            </button>
+            <button onClick={() => goToDocPage(blog)}>Добавить документы
             </button>
           </div>
         ))}
