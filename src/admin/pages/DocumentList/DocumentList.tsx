@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {
   deleteObject,
@@ -63,6 +63,10 @@ export function DocumentList(props: Props) {
       );
     }
   };
+
+  useEffect(() => {
+    fetchDocs();
+  }, []);
   return (
     <div className={'col'}>
       {docs.map((doc) => (
