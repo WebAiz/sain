@@ -71,7 +71,7 @@ export function DocumentList(props: Props) {
     <div className={'col'}>
       {docs.map((doc) => (
         <div className={'row sb'} key={doc.name}>
-          <a href={doc.url}>{doc.name}</a>
+          <a target="_blank" href={doc.url}>{doc.name}</a>
           <button onClick={() => deleteDoc(doc.name)}>DELETE</button>
         </div>
       ))}
