@@ -51,7 +51,7 @@ export function Blog(props: Props) {
       <div className={'col'}>
         <h3 className={'mb-10'}>Косалкы акпараттар</h3>
         {docs.map((doc, i) => (
-          <a key={i} href={doc.url}>{doc.name}</a>
+          <a target="_blank" key={i} href={doc.url}>{doc.name}</a>
         ))}
       </div>
     </main>
