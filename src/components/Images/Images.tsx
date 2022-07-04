@@ -81,7 +81,7 @@ export function Images(props: Props) {
           <div className={'row sb'} key={img.name}>
             <p>{img.name}</p>
             <img src={img.url} alt="" height={'100px'}/>
-            <button onClick={() => deleteImg(img.name)}>DELETE</button>
+            <button onClick={() => deleteImg(img.name)}>Удалить</button>
           </div>
         ))}
       </section>
