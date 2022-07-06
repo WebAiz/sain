@@ -15,10 +15,18 @@
 
   &-content {
     padding: 10px;
+    max-height: 200px;
+    overflow: hidden;
   }
 
   h2 {
     margin-bottom: 20px;
+  }
+
+  p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 70%;
   }
 
   .img-wrapper {
