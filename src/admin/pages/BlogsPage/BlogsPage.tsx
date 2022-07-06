@@ -1,15 +1,19 @@
 // @flow
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import {
   addSubSubCollectionDoc,
+  deleteSubSubCollectionDoc,
   editSubSubCollectionDoc,
   getSubSubCollectionDocs,
 } from '../../../helper';
-import {useNavigate, useParams} from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './BlogsPage.scss';
-import {ADMIN_ROUTES} from '../../../constants';
+import { ADMIN_ROUTES } from '../../../constants';
 import Modal from '../../../components/Modal';
+import 'draft-js/dist/Draft.css';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete'
 
 type Props = {};
 
@@ -17,7 +21,7 @@ export function BlogsPage(props: Props) {
   const [blogList, setBlogList] = useState<any>([]);
   const [isEditMode, setIsEditMode] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const {slug, subSlug} = useParams();
+  const { slug, subSlug } = useParams();
   const navigate = useNavigate();
   const [blog, setBlog] = useState<any>({
     title: '',
@@ -31,7 +35,7 @@ export function BlogsPage(props: Props) {
         subColRef: 'sub_pages',
         subDocID: subSlug,
         subSubColRef: 'blogs',
-        subSubData: {title: blog.title, description: blog.description},
+        subSubData: { title: blog.title, description: blog.description },
       });
       setOpenEdit(false);
       getBlogs();
@@ -42,7 +46,17 @@ export function BlogsPage(props: Props) {
     setOpenEdit(true);
     setIsEditMode(true);
   };
-
+  const handleDeleteClick = (blog) => {
+    deleteSubSubCollectionDoc({
+      colRef: 'common_pages',
+      docID: slug,
+      subColRef: 'sub_pages',
+      subDocID: subSlug,
+      subSubColRef: 'blogs',
+      subSubDocID: blog.id
+    }).then(() => alert("удален"))
+    getBlogs();
+  }
   const handleAddClick = () => {
     setIsEditMode(false);
     setOpenEdit(true);
@@ -66,7 +80,7 @@ export function BlogsPage(props: Props) {
       subDocID: subSlug,
       subSubColRef: 'blogs',
       subSubDocRef: blog.id,
-      subSubData: {title: blog.title, description: blog.description},
+      subSubData: { title: blog.title, description: blog.description },
     }).then(() => {
       setOpenEdit(false);
       getBlogs();
@@ -75,7 +89,7 @@ export function BlogsPage(props: Props) {
   const goToImagesPage = (blog) => {
     navigate(ADMIN_ROUTES.IMAGES + `${blog.id}`);
   };
-  const goToDocPage = (blog)=>{
+  const goToDocPage = (blog) => {
     navigate(ADMIN_ROUTES.DOCS + `${blog.id}`);
   }
   useEffect(() => {
@@ -96,11 +110,14 @@ export function BlogsPage(props: Props) {
             {/*<img src={blog.img[0]} alt="blog" />*/}
             <span>{blog.title}</span>
             <span>{blog.description}</span>
-            <button onClick={() => handleEditClick(blog)}>Редактировать</button>
-            <button onClick={() => goToImagesPage(blog)}>Настроить картины
-            </button>
-            <button onClick={() => goToDocPage(blog)}>Добавить документы
-            </button>
+            <div>
+              <EditIcon onClick={() => handleEditClick(blog)} />
+              <DeleteIcon onClick={() => handleDeleteClick(blog)} />
+              <button onClick={() => goToImagesPage(blog)}>Настроить картины
+              </button>
+              <button onClick={() => goToDocPage(blog)}>Добавить документы
+              </button>
+            </div>
           </div>
         ))}
       </section>
@@ -112,15 +129,14 @@ export function BlogsPage(props: Props) {
           <div className={'form col border'}>
             <label htmlFor="">Заголовок</label>
             <input type="text" value={blog.title}
-                   onChange={(e) => setBlog({...blog, title: e.target.value})}/>
+              onChange={(e) => setBlog({ ...blog, title: e.target.value })} />
             <label htmlFor="">Описание</label>
 
             <textarea value={blog.description}
-                      onChange={(e) => setBlog({
-                        ...blog,
-                        description: e.target.value,
-                      })}/>
-
+              onChange={(e) => setBlog({
+                ...blog,
+                description: e.target.value,
+              })} />
             {!isEditMode && <button onClick={addBlog}>Добавить</button>}
             {isEditMode && <button onClick={editBlog}>Сохранить</button>}
           </div>
