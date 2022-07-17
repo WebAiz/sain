@@ -44,7 +44,7 @@ export function ChildYearApp(props: Props) {
           ))}
         </div>
         <div className={'col'}>
-          <h3 className={'mb-10'}>Косалкы акпараттар</h3>
+          <h3 className={'mb-10'}>Қосалкы акпараттар</h3>
           {docs.map((doc, i) => (
             <a target="_blank" key={i} href={doc.url}>{doc.name}</a>
           ))}

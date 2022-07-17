@@ -83,7 +83,7 @@ export function ContactForm({closeModal}: Props) {
                       id="text" onChange={handleTextChange} />
           </div>
         </div>
-        <Button>Жиберу</Button>
+        <Button>Жіберу</Button>
       </form>
   );
 }
