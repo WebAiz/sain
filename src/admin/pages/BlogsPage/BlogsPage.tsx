@@ -11,7 +11,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import './BlogsPage.scss';
 import { ADMIN_ROUTES } from '../../../constants';
 import Modal from '../../../components/Modal';
-import 'draft-js/dist/Draft.css';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete'
 
