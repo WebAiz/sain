@@ -1,5 +1,6 @@
 import './SmallBlock.scss';
 import {useNavigate} from 'react-router-dom';
+import {truncateString} from '../../utils';
 
 type Props = {
   data: any,
@@ -23,7 +24,7 @@ export function SmallBlock(props: Props) {
 
         <div className={'block-content'}>
           <h2>{data.title}</h2>
-          <p>{data.description}</p>
+          <p>{truncateString(data.description, 300)}</p>
         </div>
       </div>
   );

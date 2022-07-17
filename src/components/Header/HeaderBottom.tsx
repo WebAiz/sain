@@ -19,7 +19,7 @@ export function HeaderBottom({headerData, navigate}: Props) {
           КОНТАКТІЛЕР
         </Button>
         <Button onClick={() => navigate(ROUTES.STUFF)}>
-          ЖУМЫСКЕРЛЕР
+          ЖҰМЫСШЫЛАР
         </Button>
       </div>
   );

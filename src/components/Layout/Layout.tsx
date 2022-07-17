@@ -48,7 +48,7 @@ export function Layout(props: Props) {
                 <Footer />
               </div>
               {isTablet && <FixedButton onClick={() => setIsOpen(true)}>
-                Напишите нам
+                Бізге жазыныз
               </FixedButton>}
               {isOpen && <Modal onClose={() => setIsOpen(false)}>
                 <ContactForm closeModal={() => setIsOpen(false)} />

@@ -23,7 +23,7 @@ export function ContactsApp(props: Props) {
   console.log(contacts);
   return (
       <div className={'contacts'}>
-        <h2 className={'mb'}>Контакты</h2>
+        <h2 className={'mb'}>Контактілер</h2>
         <div className="contacts-row">
           <h3>Email</h3>
           <p>{contacts.email}</p>

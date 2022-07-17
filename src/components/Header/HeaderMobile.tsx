@@ -31,14 +31,14 @@ export function HeaderMobile({headerData, navigate}: Props) {
             <div className="dropdown">
               <div className="dropdown-header">
                 <p onClick={() => navigate(ROUTES.CONTACTS)}>
-                  Контакты
+                  Контактілер
                 </p>
               </div>
             </div>
             <div className="dropdown">
               <div className="dropdown-header">
                 <p onClick={() => navigate(ROUTES.STUFF)}>
-                  Stuff
+                  Жұмысшылар
                 </p>
               </div>
             </div>
