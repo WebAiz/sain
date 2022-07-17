@@ -48,6 +48,7 @@ export function Sidebar(props: Props) {
           <a className="mb-10" href="/admin/child-year">Год детей</a>
           <a className="mb-10" href="/admin/contacts">Контакты</a>
           <a className="mb-10" href="/admin/ceo">Директор садика</a>
+          <a className="mb-10" href="/admin/home">Начальная страница</a>
         </div>
 
       </div>
