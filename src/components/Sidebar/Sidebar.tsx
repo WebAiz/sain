@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {DropDown} from '../common/DropDown/DropDown';
+import { useEffect, useState } from 'react';
+import { DropDown } from '../common/DropDown/DropDown';
 import './Sidebar.scss';
-import {logout} from '../../firebase';
-import {addNewDoc, getCollectionDocs} from '../../helper';
+import { logout } from '../../firebase';
+import { addNewDoc, getCollectionDocs } from '../../helper';
 
 type Props = {};
 
@@ -14,7 +14,7 @@ export function Sidebar(props: Props) {
   const [newPage, setNewPage] = useState('');
   const addNewPage = () => {
     if (newPage.length) {
-      addNewDoc('common_pages', {name: newPage})
+      addNewDoc('common_pages', { name: newPage })
         .then(res => console.log('addNewPage', res));
       setNewPage('');
       setAddPageOpen(false);
@@ -34,12 +34,12 @@ export function Sidebar(props: Props) {
       <div className="sidebar__links">
         <a className={'mb'} href="/">Главная страница</a>
         <h3 className={'mb-10'}>Общие Разделы</h3>
-        <DropDown data={pages} getData={getData}/>
+        <DropDown data={pages} getData={getData} />
         <button onClick={() => setAddPageOpen(true)}>Добавить общий Раздел
         </button>
         {addPageOpen && <div>
           <input type="text" value={newPage}
-                 onChange={(e) => setNewPage(e.target.value)}/>
+            onChange={(e) => setNewPage(e.target.value)} />
           <button onClick={addNewPage}>Добавить новую страницу</button>
         </div>}
         <div className={'col border'}>

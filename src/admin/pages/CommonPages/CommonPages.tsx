@@ -1,14 +1,17 @@
 // @flow
 import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import {ADMIN_ROUTES} from '../../../constants';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { ADMIN_ROUTES } from '../../../constants';
 import {
   addSubCollectionDoc,
+  deleteSubCollectionDoc,
   editSubCollectionDoc,
   getSubCollectionDocs,
 } from '../../../helper';
 import Modal from '../../../components/Modal';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export interface list {
   id: number,
@@ -34,7 +37,7 @@ export function CommonPages() {
   const [subPage, setSubPage] = useState<Page>({
     name: '',
   });
-  const {slug} = useParams();
+  const { slug } = useParams();
 
   const saveEdit = () => {
     if (subPage.name) {
@@ -43,10 +46,10 @@ export function CommonPages() {
         docID: slug || '',
         subColRef: 'sub_pages',
         subDocID: subPage.id,
-        subDocData: {name: subPage.name},
+        subDocData: { name: subPage.name },
       }).then((res) => {
         setIsEditMode(false);
-        setSubPage({name: ''});
+        setSubPage({ name: '' });
         setOpenForm(false);
         getData();
       });
@@ -58,7 +61,7 @@ export function CommonPages() {
         colRef: 'common_pages',
         docID: slug || '',
         subColRef: 'sub_pages',
-        subDocData: {name: subPage.name},
+        subDocData: { name: subPage.name },
       })
         .then((res) => {
           setOpenForm(false);
@@ -76,10 +79,20 @@ export function CommonPages() {
     setIsEditMode(true);
   };
   const handleAddClick = () => {
-    setSubPage({name: ''});
+    setSubPage({ name: '' });
     setIsEditMode(false);
     setOpenForm(true);
   };
+  const handleDeleteClick = (page) => {
+    deleteSubCollectionDoc({
+      colRef: 'common_pages',
+      docID: slug || '',
+      subColRef: 'sub_pages',
+      subDocID: page.id,
+    })
+    getData();
+    alert('Удален ')
+  }
 
   function getData() {
     getSubCollectionDocs({
@@ -100,7 +113,10 @@ export function CommonPages() {
         {docs.map((page, index) => (
           <div className={'row sb mb-10 bg-gray p-10'} key={index}>
             <a href={ADMIN_ROUTES.PAGES + slug + '/' + page.id}>{page.name}</a>
-            <button onClick={() => handleEditClick(page)}>Редактировать</button>
+            <div>
+              <EditIcon onClick={() => handleEditClick(page)} />
+              <DeleteIcon onClick={() => handleDeleteClick(page)} />
+            </div>
           </div>
         ))}
       </section>
@@ -109,10 +125,10 @@ export function CommonPages() {
       {openForm && <Modal onClose={() => setOpenForm(false)}>
         <div className={'col sb border p-10'}>
           <input placeholder={'название подраздела'} className={'mb'} type="text" value={subPage.name}
-                 onChange={(e) => setSubPage({
-                   ...subPage,
-                   name: e.target.value,
-                 })}/>
+            onChange={(e) => setSubPage({
+              ...subPage,
+              name: e.target.value,
+            })} />
           {!isEditMode && <button onClick={addSubPages}>Добавить новый подраздел</button>}
           {isEditMode &&
             <button onClick={saveEdit}>Сохранить изменения</button>}
