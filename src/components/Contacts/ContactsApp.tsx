@@ -29,15 +29,15 @@ export function ContactsApp(props: Props) {
           <p>{contacts.email}</p>
         </div>
         <div className="contacts-row">
-          <h3>Adress</h3>
+          <h3>Мекенжай</h3>
           <p>{contacts.address}</p>
         </div>
         <div className="contacts-row">
-          <h3>Регион</h3>
+          <h3>Аймақ</h3>
           <p>{contacts.region}</p>
         </div>
         <div className="contacts-row">
-          <h3>Кала</h3>
+          <h3>Қала</h3>
           <p>{contacts.city}</p>
         </div>
         <div className={'contacts-row'}>
