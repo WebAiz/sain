@@ -24,7 +24,7 @@ export function SmallBlock(props: Props) {
 
         <div className={'block-content'}>
           <h2>{data.title}</h2>
-          <p>{truncateString(data.description, 300)}</p>
+          <p>{truncateString(data.description, 250)}</p>
         </div>
       </div>
   );
