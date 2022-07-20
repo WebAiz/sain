@@ -18,32 +18,32 @@ export function HeaderMobile({headerData, navigate}: Props) {
     setIsOpen(false);
   }, [navigate]);
   return (
-      <header className={'header'}>
-        {isOpen ? <CloseIcon
-                className={'burger'}
-                onClick={() => setIsOpen(false)} />
-            : <MenuIcon className={'burger'} onClick={() => setIsOpen(true)} />}
-        {isOpen &&
+    <header className={'header'}>
+      {isOpen ? <CloseIcon
+          className={'burger'}
+          onClick={() => setIsOpen(false)} />
+        : <MenuIcon className={'burger'} onClick={() => setIsOpen(true)} />}
+      {isOpen &&
           <div className="menu">
             {headerData.map((el, i) => (
-                <MobileDropDown navigate={navigate} data={el} key={i} />
+              <MobileDropDown navigate={navigate} data={el} key={i} />
             ))}
-            <div className="dropdown">
-              <div className="dropdown-header">
-                <p onClick={() => navigate(ROUTES.CONTACTS)}>
-                  Контактілер
-                </p>
+              <div className="dropdown">
+                  <div className="dropdown-header">
+                      <p onClick={() => navigate(ROUTES.CONTACTS)}>
+                          Контактілер
+                      </p>
+                  </div>
               </div>
-            </div>
-            <div className="dropdown">
-              <div className="dropdown-header">
-                <p onClick={() => navigate(ROUTES.STUFF)}>
-                  Жұмысшылар
-                </p>
+              <div className="dropdown">
+                  <div className="dropdown-header">
+                      <p onClick={() => navigate(ROUTES.STUFF)}>
+                          Қызметкерлер
+                      </p>
+                  </div>
               </div>
-            </div>
           </div>
-        }
-      </header>
+      }
+    </header>
   );
 }

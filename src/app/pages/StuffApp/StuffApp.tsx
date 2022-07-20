@@ -13,7 +13,7 @@ export function StuffApp(props: Props) {
 
   return (
       <main className={'stuff'}>
-        <h1 className={'mb'}>Жұмысшылар</h1>
+        <h1 className={'mb'}>Қызметкерлер</h1>
         <div className={'stuff-list'}>
           {data.map((el, i) => (
               <div key={i} className={'stuff-card'}>

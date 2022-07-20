@@ -1,22 +1,10 @@
 .blog {
-  padding: 20px 0;
+  padding: 20px 20px 20px 0;
   width: 100%;
 
-  &-list {
-    display: grid;
-    grid-template-columns: repeat(4, 25%);
-  }
-
   img {
-    margin: 5px;
-    width: 90%;
+    width: 100%;
   }
 }
 
-@media screen and (max-width: 1024px) {
-  .blog {
-    &-list {
-      grid-template-columns: repeat(2, 50%);
-    }
-  }
-}
+
